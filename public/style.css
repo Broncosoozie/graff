@@ -88,3 +88,10 @@ body { font: 13px Helvetica, Arial; }
   border-color: #D9EDF7;
   display: none;
 }
+
+#game-over {
+  color: #B84442;
+  border-color: #EBCCD1;
+  background-color: #F2DEDE;
+  display: none;
+}

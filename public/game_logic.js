@@ -14,6 +14,15 @@ $(function () {
     return guess.match(regex) !== null;
   };
 
+  function resetBoard() {
+    $('#start-game').attr("disabled", false);
+    $('#skip').attr("disabled", true);
+    gameLogic.youAreDrawing = false;
+    currentWord = null;
+    $('.word').text("");
+    socket.emit('clear canvas');
+  };
+
   $('#name-set').submit(function(e) {
     e.preventDefault();
     socket.emit('name change', $('#name').val());
@@ -50,6 +59,11 @@ $(function () {
 
   $('#start-game').click(function(e) {
     socket.emit('start game');
+    return false;
+  });
+
+  $('#give-up').click(function(e) {
+    socket.emit('give up');
     return false;
   });
 
@@ -92,6 +106,12 @@ $(function () {
     }
   });
 
+  socket.on('give up', function() {
+    resetBoard();
+
+    $("div#game-over").fadeIn(300).delay(2000).fadeOut(400);
+  });
+
   socket.on('clear guess list', function() {
     $('#guess-messages').empty();
   });
@@ -105,7 +125,6 @@ $(function () {
     var listItem;
 
     if (correctGuess(message, currentWord)) {
-    // if (message == currentWord) {
       listItem = $('<li class="correct">').text(fullMessage);
       listItem.attr('id', now);
       $("div#correct-guess").text("Word was: " + currentWord + ", correct!");
@@ -137,24 +156,10 @@ $(function () {
   });
 
   socket.on('game win', function() {
-    gameLogic.youAreDrawing = false;
-    currentWord = null;
-    $('.word').text("");
-    $('#start-game').attr("disabled", false);
-    $('#skip').attr("disabled", true);
-    socket.emit('clear canvas');
+    resetBoard();
 
     $("div#game-win").fadeIn(300).delay(3000).fadeOut(400);
   });
-
-  // socket.on('wordlist', function(wordsBeingDrawn) {
-  //   wordList = wordsBeingDrawn;
-  //   currentWord = wordList[0];
-  // });
-
-  // socket.on('next word', function(currentIndex) {
-  //   currentWord = wordList[currentIndex];
-  // });
 
   socket.on('correct guess', function() {
     var currentIndex = _.findIndex(wordList, function(word) {

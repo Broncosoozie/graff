@@ -65,6 +65,10 @@ io.on('connection', function(socket) {
     io.emit('skip word');
   });
 
+  socket.on('give up', function() {
+    io.emit('give up');
+  });
+
   socket.on('correct guess', function() {
     // socket.broadcast.emit('correct guess');
     io.to(`${currentDrawer}`).emit('correct guess');
