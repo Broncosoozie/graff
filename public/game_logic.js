@@ -8,6 +8,7 @@ $(function () {
 
   drawing.initialize(socket, gameLogic);
   $('#skip').attr("disabled", true);
+  $('#give-up').attr("disabled", true);
 
   function correctGuess(guess, actual) {
     var regex = new RegExp(".*" + actual + ".*", "i", "g");
@@ -17,6 +18,7 @@ $(function () {
   function resetBoard() {
     $('#start-game').attr("disabled", false);
     $('#skip').attr("disabled", true);
+    $('#give-up').attr("disabled", true);
     gameLogic.youAreDrawing = false;
     currentWord = null;
     $('.word').text("");
@@ -96,6 +98,7 @@ $(function () {
     $('.word').text(wordList[0]);
     gameLogic.youAreDrawing = true;
     $('#skip').attr('disabled', false);
+    $('#give-up').attr('disabled', false);
   });
 
   socket.on('start new game', function() {
@@ -103,6 +106,7 @@ $(function () {
     $('#start-game').attr("disabled", true);
     if (!gameLogic.youAreDrawing) {
       $('#skip').attr("disabled", true);
+      $('#give-up').attr("disabled", true);
     }
   });
 
@@ -189,5 +193,9 @@ $(function () {
   socket.on('skip word', function() {
     $("div#skip-word").text("Word skipped!");
     $("div#skip-word").fadeIn(300).delay(500).fadeOut(400);
+  });
+
+  socket.on('game in progress', function() {
+    $('#start-game').attr("disabled", true);
   });
 });
