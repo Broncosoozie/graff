@@ -12,7 +12,7 @@ var leagueChampsList = wholeWordListFile.leagueChamps;
 var stateList = wholeWordListFile.states;
 var currentDrawer;
 
-var wordList = baseWordList + leagueChampsList + stateList;
+var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
 
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + 'index.html');
@@ -42,7 +42,7 @@ io.on('connection', function(socket) {
 
   socket.on('start game', function() {
     console.log('Game starting...');
-    var wordsToDraw = _.sampleSize(wordlist, 10);
+    var wordsToDraw = _.sampleSize(wordList, 10);
     console.log('Sending Wordlist: ' + wordsToDraw);
     console.log('To: ' + socket.id);
     currentDrawer = socket.id
