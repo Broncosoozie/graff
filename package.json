@@ -1,0 +1,10 @@
+{
+  "name": "pictionary.clariz.io",
+  "version": "0.0.1",
+  "description": "Like the Yahoo! Graffiti of old",
+  "dependencies": {
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "socket.io": "^2.2.0"
+  }
+}

@@ -1,0 +1,90 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 13px Helvetica, Arial; }
+#inputs { padding: 3px; position: fixed; bottom: 20px; width: 100%; }
+#name-set { width: 20%; display: inline-block; float: left; padding-top: 8px; }
+#messages-input { width: 80%; display: inline-block; }
+
+#main-chat { width: 100%; }
+#main-chat input { border: 2; padding: 10px; width: 90%; margin-right: .5%; }
+#main-chat button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }
+
+.drawing-area { display: inline-block; float: left; }
+
+#guess-area { display: inline-block; float: left; margin-left: 20px; }
+#guess-box { height: 480px; width: 300px; border: 1px solid #000; overflow: auto; }
+#guess-messages { list-style-type: none; margin: 0; padding: 0; }
+#guess-messages li { padding: 5px 10px; cursor: pointer; }
+#guess-messages li:nth-child(odd) { background: #eee; }
+
+.whiteboard {
+  width: 640px;
+  height: 480px;
+  border: 1px solid #000;
+}
+
+.colors {
+  width: 640px;
+}
+
+.color {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+.word-area {
+  float: left;
+  width: 200px;
+}
+
+.word-area button {
+  float: left;
+  margin-right: 10px;
+}
+
+.correct { color: blue; }
+.highlight { color: green; }
+
+.highlight-color { border: 3px solid #008080 !important }
+
+.color.black { background-color: black; }
+.color.red { background-color: red; }
+.color.green { background-color: green; }
+.color.blue { background-color: blue; }
+.color.yellow { background-color: yellow; }
+.color.purple { background-color: purple; }
+.color.pink { background-color: pink; }
+.color.brown { background-color: brown; }
+.color.white { background-color: white; border: 1px solid #000; }
+.color.clear { float: right; margin-right: 22px; }
+.color.clear button { padding: 5px; }
+
+.alert-box {
+  height: 50px;
+  width: 200px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  position: fixed;
+  top: 320px;
+  left: 240px;
+}
+
+#game-win, #game-start, #correct-guess { 
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  display:none;
+}
+
+#skip-word {
+  color: #31708F;
+  background-color: #BCE8F1;
+  border-color: #D9EDF7;
+  display: none;
+}
