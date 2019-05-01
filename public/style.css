@@ -63,6 +63,8 @@ body { font: 13px Helvetica, Arial; }
 .color.clear { float: right; margin-right: 22px; }
 .color.clear button { padding: 5px; }
 
+#timer { margin-left: 30px; width: 50px;}
+
 .alert-box {
   height: 50px;
   width: 200px;
@@ -89,7 +91,7 @@ body { font: 13px Helvetica, Arial; }
   display: none;
 }
 
-#game-over {
+#game-over, #time-out {
   color: #B84442;
   border-color: #EBCCD1;
   background-color: #F2DEDE;

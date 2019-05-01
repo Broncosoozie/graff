@@ -22,6 +22,7 @@ $(function () {
     gameLogic.youAreDrawing = false;
     currentWord = null;
     $('.word').text("");
+    $('#timer').text("");
     socket.emit('clear canvas');
   };
 
@@ -165,6 +166,19 @@ $(function () {
     $("div#game-win").fadeIn(300).delay(3000).fadeOut(400);
   });
 
+  socket.on('current timer', function(timeLeft) {
+    var minutes = Math.floor(timeLeft / 60);
+    var seconds = timeLeft - (minutes * 60);
+    var currentTimeLeft = minutes + ":" + seconds;
+    $("div#timer").text(currentTimeLeft);
+  });
+
+  socket.on('time out', function() {
+    resetBoard();
+
+    $("div#time-out").fadeIn(300).delay(3000).fadeOut(400);
+  });
+
   socket.on('correct guess', function() {
     var currentIndex = _.findIndex(wordList, function(word) {
       return word == $('.word').text();
@@ -191,7 +205,6 @@ $(function () {
   });
 
   socket.on('skip word', function() {
-    $("div#skip-word").text("Word skipped!");
     $("div#skip-word").fadeIn(300).delay(500).fadeOut(400);
   });
 

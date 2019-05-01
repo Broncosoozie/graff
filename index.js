@@ -12,6 +12,7 @@ var leagueChampsList = wholeWordListFile.leagueChamps;
 var stateList = wholeWordListFile.states;
 var currentDrawer;
 var gameInProgress = false;
+var gameInterval;
 
 var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
 
@@ -41,10 +42,6 @@ io.on('connection', function(socket) {
     io.emit('clear canvas');
   });
 
-  // socket.on('skip word', function(newIndex) {
-  //   socket.broadcast.emit('next word', newIndex);
-  // });
-
   socket.on('start game', function() {
     console.log('Game starting...');
     var wordsToDraw = _.sampleSize(wordList, 10);
@@ -56,7 +53,16 @@ io.on('connection', function(socket) {
     io.emit('start new game');
     io.to(`${currentDrawer}`).emit('your turn', wordsToDraw);
     socket.broadcast.emit('current word', wordsToDraw[0]);
-    // socket.broadcast.emit('wordlist', wordsToDraw);
+    var timer = 120;
+    gameInterval = setInterval(function() {
+      timer--;
+      io.emit('current timer', timer);
+      if (timer === 0) {
+        io.emit('time out');
+        gameInProgress = false;
+        clearInterval(gameInterval);
+      }
+    }, 1000);
   });
 
   socket.on('current word', function(currentWord) {
@@ -65,6 +71,7 @@ io.on('connection', function(socket) {
 
   socket.on('game win', function() {
     gameInProgress = false;
+    clearInterval(gameInterval);
     io.emit('game win');
   });
 
@@ -74,6 +81,7 @@ io.on('connection', function(socket) {
 
   socket.on('give up', function() {
     gameInProgress = false;
+    clearInterval(gameInterval);
     io.emit('give up');
   });
 
