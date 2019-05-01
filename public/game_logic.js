@@ -168,7 +168,7 @@ $(function () {
 
   socket.on('current timer', function(timeLeft) {
     var minutes = Math.floor(timeLeft / 60);
-    var seconds = timeLeft - (minutes * 60);
+    var seconds = _.padStart(timeLeft - (minutes * 60), 2, '0');
     var currentTimeLeft = minutes + ":" + seconds;
     $("div#timer").text(currentTimeLeft);
   });
