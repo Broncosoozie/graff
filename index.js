@@ -8,10 +8,11 @@ app.use(express.static(__dirname + '/public'));
 
 var wholeWordListFile = require(__dirname + '/data/wordlist.json');
 var baseWordList = wholeWordListFile.baseWords;
-var leagueChampsList = wholeWordListFile.leagueChamps
+var leagueChampsList = wholeWordListFile.leagueChamps;
+var stateList = wholeWordListFile.states;
 var currentDrawer;
 
-var wordList = baseWordList + leagueChampsList;
+var wordList = baseWordList + leagueChampsList + stateList;
 
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + 'index.html');
