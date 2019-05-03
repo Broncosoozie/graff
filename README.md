@@ -4,7 +4,7 @@ This project is meant to be a way to play a similar game to the old Yahoo! Graff
 
 Things still left to do (in no particular order):
   * ~~Add a timer~~
-  * Add sounds
+  * ~~Add sounds~~
   * Make sounds mutable
   * Add word suggestion box
   * Add nickname/cookie storing

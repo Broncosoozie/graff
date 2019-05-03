@@ -5,6 +5,14 @@ $(function () {
   var wordList = [];
   var currentWord;
   var gameLogic = {youAreDrawing: false};
+  var tada = new Audio('sounds/tada.flac');
+  tada.volume = 0.5;
+  var gameOverSound = new Audio('sounds/gameOver.wav');
+  gameOverSound.volume = 0.3;
+  var correctSound = new Audio('sounds/correct.wav');
+  correctSound.volume = 0.5;
+  var skipSound = new Audio('sounds/skip.wav');
+  skipSound.volume = 0.5;
 
   drawing.initialize(socket, gameLogic);
   $('#skip').attr("disabled", true);
@@ -174,6 +182,7 @@ $(function () {
   socket.on('give up', function() {
     resetBoard();
 
+    gameOverSound.play();
     flashMessage('#game-over', 2000);
   });
 
@@ -190,6 +199,7 @@ $(function () {
     var listItem;
 
     if (correctGuess(message, currentWord)) {
+      correctSound.play();
       listItem = $('<li class="correct">').text(fullMessage);
       listItem.attr('id', now);
       $("#correct-guess").text("Word was: " + currentWord + ", correct!");
@@ -223,6 +233,7 @@ $(function () {
   socket.on('game win', function() {
     resetBoard();
 
+    tada.play();
     flashMessage('#game-win', 3000);
   });
 
@@ -240,6 +251,7 @@ $(function () {
   socket.on('time out', function(wordFailedOn) {
     resetBoard();
 
+    gameOverSound.play();
     $("div#time-out").text("Time's up! Word was: " + wordFailedOn);
     flashMessage('#time-out', 3000);
   });
@@ -270,6 +282,7 @@ $(function () {
   });
 
   socket.on('skip word', function() {
+    skipSound.play();
     flashMessage('#skip-word', 500);
   });
 
