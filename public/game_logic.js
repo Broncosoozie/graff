@@ -10,6 +10,7 @@ $(function () {
   $('#skip').attr("disabled", true);
   $('#clear').attr("disabled", true);
   $('#give-up').attr("disabled", true);
+  $('#give-up').hide();
 
   $('#name-modal').modal();
   $('#name-modal').on('hide.bs.modal', function(e) {
@@ -33,9 +34,11 @@ $(function () {
 
   function resetBoard() {
     $('#start-game').attr("disabled", false);
+    $('#start-game').show();
     $('#skip').attr("disabled", true);
     $('#clear').attr("disabled", true);
     $('#give-up').attr("disabled", true);
+    $('#give-up').hide();
     gameLogic.youAreDrawing = false;
     currentWord = null;
     $('.word').text("");
@@ -99,6 +102,9 @@ $(function () {
       wordLists: getWordListSelections()
     }
 
+    $('#start-game').hide();
+    $('#give-up').show();
+
     socket.emit('start game', gameOptions);
     return false;
   });
@@ -139,7 +145,6 @@ $(function () {
     console.log(wordsToDraw);
     wordList = wordsToDraw;
     currentWord = wordList[0];
-    // socket.emit('current word', currentWord);
     $('.word').text(wordList[0]);
     gameLogic.youAreDrawing = true;
     $('#skip').attr('disabled', false);
@@ -149,6 +154,8 @@ $(function () {
 
   socket.on('start new game', function() {
     flashMessage('#game-start', 1500);
+    $('#start-game').hide();
+    $('#give-up').show();
     $('#start-game').attr("disabled", true);
     if (!gameLogic.youAreDrawing) {
       $('#skip').attr("disabled", true);

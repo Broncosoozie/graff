@@ -94,3 +94,7 @@ body { font: 13px Helvetica, Arial; }
 .word-list-label {
   padding-top: 5px;
 }
+
+#start-game, #give-up {
+  width: 110px;
+}
