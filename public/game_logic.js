@@ -24,8 +24,10 @@ $(function () {
   });
 
   function correctGuess(guess, actual) {
-    var regex = new RegExp(".*" + actual + ".*", "i", "g");
-    return guess.match(regex) !== null;
+    var actualModified = actual.replace(/[\s\'\.\-]+/, '');
+    var guessModified = guess.replace(/[\s\'\.\-]+/, '');
+    var regex = new RegExp(".*" + actualModified + ".*", "i", "g");
+    return guessModified.match(regex) !== null;
   };
 
   function flashMessage(elementId, delay) {
