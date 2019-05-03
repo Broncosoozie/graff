@@ -60,9 +60,11 @@ body { font: 13px Helvetica, Arial; }
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
+  pointer-events: none;
 }
 
 .alert-box-location {
+  pointer-events: none;
   position: relative;
   top: -200px;
   left: 220px;
