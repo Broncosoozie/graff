@@ -27,6 +27,10 @@ $(function () {
     return guess.match(regex) !== null;
   };
 
+  function flashMessage(elementId, delay) {
+    $(elementId).fadeIn(300).delay(delay).fadeOut(400);
+  };
+
   function resetBoard() {
     $('#start-game').attr("disabled", false);
     $('#skip').attr("disabled", true);
@@ -85,7 +89,7 @@ $(function () {
     var wordLists = getWordListSelections();
 
     if (_.isEmpty(wordLists)) {
-      $("div#no-wordlist-selected").fadeIn(300).delay(3000).fadeOut(400);
+      flashMessage('#no-wordlist-selected', 3000);
       return false;
     }
 
@@ -144,7 +148,7 @@ $(function () {
   });
 
   socket.on('start new game', function() {
-    $("div#game-start").fadeIn(300).delay(1500).fadeOut(400);
+    flashMessage('#game-start', 1500);
     $('#start-game').attr("disabled", true);
     if (!gameLogic.youAreDrawing) {
       $('#skip').attr("disabled", true);
@@ -156,7 +160,7 @@ $(function () {
   socket.on('give up', function() {
     resetBoard();
 
-    $("div#game-over").fadeIn(300).delay(2000).fadeOut(400);
+    flashMessage('#game-over', 2000);
   });
 
   socket.on('clear guess list', function() {
@@ -175,7 +179,7 @@ $(function () {
       listItem = $('<li class="correct">').text(fullMessage);
       listItem.attr('id', now);
       $("#correct-guess").text("Word was: " + currentWord + ", correct!");
-      $("#correct-guess-box").fadeIn(300).delay(500).fadeOut(400);
+      flashMessage('#correct-guess-box', 500);
       if (gameLogic.youAreDrawing) {
         socket.emit('correct guess', currentWord);
       }
@@ -205,7 +209,7 @@ $(function () {
   socket.on('game win', function() {
     resetBoard();
 
-    $("div#game-win").fadeIn(300).delay(3000).fadeOut(400);
+    flashMessage('#game-win', 3000);
   });
 
   socket.on('current timer', function(timeLeft) {
@@ -223,7 +227,7 @@ $(function () {
     resetBoard();
 
     $("div#time-out").text("Time's up! Word was: " + wordFailedOn);
-    $("div#time-out").fadeIn(300).delay(3000).fadeOut(400);
+    flashMessage('#time-out', 3000);
   });
 
   socket.on('correct guess', function() {
@@ -252,7 +256,7 @@ $(function () {
   });
 
   socket.on('skip word', function() {
-    $("div#skip-word").fadeIn(300).delay(500).fadeOut(400);
+    flashMessage('#skip-word', 500);
   });
 
   socket.on('game in progress', function() {
