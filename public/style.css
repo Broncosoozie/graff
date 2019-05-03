@@ -12,9 +12,9 @@ body { font: 13px Helvetica, Arial; }
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
-.drawing-area { display: inline-block; float: left; }
+.drawing-area { height: 480px; }
 
-#guess-area { display: inline-block; float: left; margin-left: 20px; }
+#guess-area { display: inline-block; float: left; }
 #guess-box { height: 480px; width: 300px; border: 1px solid #000; overflow: auto; }
 #guess-messages { list-style-type: none; margin: 0; padding: 0; }
 #guess-messages li { padding: 5px 10px; cursor: pointer; }
@@ -27,23 +27,13 @@ body { font: 13px Helvetica, Arial; }
 }
 
 .colors {
-  width: 640px;
+  padding: 4px 22px;
 }
 
 .color {
   display: inline-block;
   height: 24px;
   width: 24px;
-}
-
-.word-area {
-  float: left;
-  width: 200px;
-}
-
-.word-area button {
-  float: left;
-  margin-right: 10px;
 }
 
 .correct { color: blue; }
@@ -53,17 +43,15 @@ body { font: 13px Helvetica, Arial; }
 
 .color.black { background-color: black; }
 .color.red { background-color: red; }
-.color.green { background-color: green; }
+.color.green { background-color: #28A745; }
 .color.blue { background-color: blue; }
-.color.yellow { background-color: yellow; }
+.color.yellow { background-color: #FFC107; }
 .color.purple { background-color: purple; }
 .color.pink { background-color: pink; }
 .color.brown { background-color: brown; }
 .color.white { background-color: white; border: 1px solid #000; }
 .color.clear { float: right; margin-right: 22px; }
 .color.clear button { padding: 5px; }
-
-#timer { margin-left: 30px; width: 50px;}
 
 .alert-box {
   height: 50px;
@@ -72,16 +60,19 @@ body { font: 13px Helvetica, Arial; }
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
-  position: fixed;
-  top: 320px;
-  left: 240px;
 }
 
-#game-win, #game-start, #correct-guess { 
+.alert-box-location {
+  position: relative;
+  top: -200px;
+  left: 220px;
+}
+
+#game-win, #game-start, #correct-guess-box { 
   color: #3c763d;
   background-color: #dff0d8;
   border-color: #d6e9c6;
-  display:none;
+  display: none;
 }
 
 #skip-word {

@@ -8,6 +8,7 @@ $(function () {
 
   drawing.initialize(socket, gameLogic);
   $('#skip').attr("disabled", true);
+  $('#clear').attr("disabled", true);
   $('#give-up').attr("disabled", true);
 
   function correctGuess(guess, actual) {
@@ -18,6 +19,7 @@ $(function () {
   function resetBoard() {
     $('#start-game').attr("disabled", false);
     $('#skip').attr("disabled", true);
+    $('#clear').attr("disabled", true);
     $('#give-up').attr("disabled", true);
     gameLogic.youAreDrawing = false;
     currentWord = null;
@@ -62,6 +64,7 @@ $(function () {
 
   $('#start-game').click(function(e) {
     socket.emit('start game');
+    $("#timer").text('2:00');
     return false;
   });
 
@@ -99,6 +102,7 @@ $(function () {
     $('.word').text(wordList[0]);
     gameLogic.youAreDrawing = true;
     $('#skip').attr('disabled', false);
+    $('#clear').attr('disabled', false);
     $('#give-up').attr('disabled', false);
   });
 
@@ -107,6 +111,7 @@ $(function () {
     $('#start-game').attr("disabled", true);
     if (!gameLogic.youAreDrawing) {
       $('#skip').attr("disabled", true);
+      $('#clear').attr("disabled", true);
       $('#give-up').attr("disabled", true);
     }
   });
@@ -132,8 +137,8 @@ $(function () {
     if (correctGuess(message, currentWord)) {
       listItem = $('<li class="correct">').text(fullMessage);
       listItem.attr('id', now);
-      $("div#correct-guess").text("Word was: " + currentWord + ", correct!");
-      $("div#correct-guess").fadeIn(300).delay(500).fadeOut(400);
+      $("#correct-guess").text("Word was: " + currentWord + ", correct!");
+      $("#correct-guess-box").fadeIn(300).delay(500).fadeOut(400);
       if (gameLogic.youAreDrawing) {
         socket.emit('correct guess', currentWord);
       }
@@ -170,7 +175,7 @@ $(function () {
     var minutes = Math.floor(timeLeft / 60);
     var seconds = _.padStart(timeLeft - (minutes * 60), 2, '0');
     var currentTimeLeft = minutes + ":" + seconds;
-    $("div#timer").text(currentTimeLeft);
+    $("#timer").text(currentTimeLeft);
   });
 
   socket.on('time out', function() {
