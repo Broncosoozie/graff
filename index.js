@@ -42,9 +42,10 @@ io.on('connection', function(socket) {
     io.emit('clear canvas');
   });
 
-  socket.on('start game', function() {
+  socket.on('start game', function(options) {
     console.log('Game starting...');
-    var wordsToDraw = _.sampleSize(wordList, 10);
+    console.log(options);
+    var wordsToDraw = _.sampleSize(wordList, parseInt(options.wordCountOption));
     gameInProgress = true;
     console.log('Sending Wordlist: ' + wordsToDraw);
     console.log('To: ' + socket.id);
@@ -53,16 +54,19 @@ io.on('connection', function(socket) {
     io.emit('start new game');
     io.to(`${currentDrawer}`).emit('your turn', wordsToDraw);
     socket.broadcast.emit('current word', wordsToDraw[0]);
-    var timer = 120;
-    gameInterval = setInterval(function() {
-      timer--;
-      io.emit('current timer', timer);
-      if (timer === 0) {
-        io.emit('time out');
-        gameInProgress = false;
-        clearInterval(gameInterval);
-      }
-    }, 1000);
+    var timer = parseInt(options.timeOption);
+    io.emit('current timer', timer);
+    if (timer !== 0) {
+      gameInterval = setInterval(function() {
+        timer--;
+        io.emit('current timer', timer);
+        if (timer === 0) {
+          io.emit('time out');
+          gameInProgress = false;
+          clearInterval(gameInterval);
+        }
+      }, 1000);
+    }
   });
 
   socket.on('current word', function(currentWord) {

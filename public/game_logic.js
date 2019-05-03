@@ -11,6 +11,15 @@ $(function () {
   $('#clear').attr("disabled", true);
   $('#give-up').attr("disabled", true);
 
+  $('#name-modal').modal();
+  $('#name-modal').on('hide.bs.modal', function(e) {
+    if ($('#name-modal-input').val() !== "") {
+      $('#name').val($('#name-modal-input').val());
+    } else {
+      $('#name').val("Unknown");
+    }
+  });
+
   function correctGuess(guess, actual) {
     var regex = new RegExp(".*" + actual + ".*", "i", "g");
     return guess.match(regex) !== null;
@@ -63,8 +72,11 @@ $(function () {
   });
 
   $('#start-game').click(function(e) {
-    socket.emit('start game');
-    $("#timer").text('2:00');
+    var gameOptions = {
+      timeOption: $('#time-option').val(),
+      wordCountOption: $('#word-count-option').val()
+    }
+    socket.emit('start game', gameOptions);
     return false;
   });
 
@@ -91,6 +103,12 @@ $(function () {
     }
     $('#guess-m').val('');
     return false;
+  });
+
+  $('#reset-default-options').click(function(e) {
+    e.preventDefault();
+    $('#time-option').val('120');
+    $('#word-count-option').val('10');
   });
 
   socket.on('your turn', function(wordsToDraw) {

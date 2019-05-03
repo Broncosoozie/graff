@@ -80,6 +80,8 @@
             <div class="game-controls">
               <button class="btn btn-secondary" id="start-game">Start Game</button>
               <button class="btn btn-secondary" id="give-up">Give up</button>
+              <button data-toggle="modal" class="btn btn-dark" data-target="#name-modal">Change name</button>
+              <button data-toggle="modal" class="btn btn-dark" data-target="#game-options-modal">Game Options</button>
             </div>
           </div>
         </div>
@@ -106,7 +108,7 @@
       </div>
 
       <div class="row">
-        <div id="inputs">
+        <div id="inputs" class="invisible">
           <div id="name-set">
             <label>Name: </label>
             <input id="name" autocomplete="off" value="Unknown" />
@@ -116,6 +118,68 @@
           <!--     <input id="m" autocomplete="off" /><button>Send</button> -->
           <!--   </form> -->
           <!-- </div> -->
+        </div>
+      </div>
+
+      <div class="modal fade" id="name-modal" aria-hidden="true" aria-labelledby="name-modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Hello! What's your name?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form id="name-modal-form" class="form-inline">
+                <div class="form-group mx-sm-2">
+                  <input id="name-modal-input" class="form-control" autocomplete="off" placeholder="Not Bronco"/>
+                </div>
+
+                <button data-dismiss="modal" class="btn btn-primary">That's me!</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="game-options-modal" aria-hidden="true" aria-labelledby="game-options-modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Game Options</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form id="name-modal-form">
+                <div class="form-group">
+                  <label for="time-option">Choose Round Length</label>
+                  <select id="time-option" name="time-option" class="custom-select">
+                    <option value="60">60 Seconds</option>
+                    <option value="120" selected>120 Seconds (Default)</option>
+                    <option value="180">180 Seconds</option>
+                    <option value="0">Free play</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="word-count-option">Choose Word Count</label>
+                  <select id="word-count-option" name="word-count-option" class="custom-select">
+                    <option value="5">5 Words</option>
+                    <option value="10" selected>10 Words (Default)</option>
+                    <option value="20">20 Words</option>
+                  </select>
+                </div>
+
+                <button id="reset-default-options" class="btn btn-secondary">Reset Defaults</button>
+                <button data-dismiss="modal" class="btn btn-primary">Save</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
