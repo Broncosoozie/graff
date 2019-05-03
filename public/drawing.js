@@ -7,7 +7,7 @@ drawing.initialize = function(socket, gameLogic) {
   var colors = document.getElementsByClassName('color');
   var context = canvas.getContext('2d');
   var offsetX = parseInt($('.whiteboard')[0].getBoundingClientRect().x);
-  var offsetY = parseInt($('ul.nav')[0].getBoundingClientRect().height);
+  var offsetY = parseInt($('#navBar')[0].getBoundingClientRect().height) + 25;
 
   var current = {
     color: 'black'

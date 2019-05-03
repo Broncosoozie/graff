@@ -1,5 +1,8 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; }
+body {
+  font: 13px Helvetica, Arial;
+  background-color: #DEE2E6;
+}
 #inputs { padding: 3px; position: fixed; bottom: 20px; width: 100%; }
 #name-set { width: 20%; display: inline-block; float: left; padding-top: 8px; }
 #messages-input { width: 80%; display: inline-block; }
@@ -15,19 +18,47 @@ body { font: 13px Helvetica, Arial; }
 .drawing-area { height: 480px; }
 
 #guess-area { width: 100%; }
-#guess-box { height: 480px; width: 100%; border: 1px solid #000; overflow: auto; }
+#guess-box {
+  height: 480px;
+  width: 100%;
+  border: 3px solid #000;
+  border-radius: 4px;
+  overflow: auto;
+}
 #guess-messages { list-style-type: none; margin: 0; padding: 0; }
 #guess-messages li { padding: 5px 10px; cursor: pointer; }
 #guess-messages li:nth-child(odd) { background: #eee; }
 
-#guess-form { margin-top: 20px; }
+#guess-form { margin-top: 10px; }
 #guess-input { width: 315px; }
 #guess-m { width: 100%; }
+
+#drawing-controls {
+  margin-top: 15px;
+}
+
+#game-info {
+  height: 20px;
+  margin-top: 15px;
+}
+
+#word-count-left {
+  margin-top: 5px;
+}
+
+#logo {
+  color: #FFF;
+}
+
+#main-container {
+  margin-top: 25px;
+}
 
 .whiteboard {
   width: 640px;
   height: 480px;
-  border: 1px solid #000;
+  border: 3px solid #000;
+  border-radius: 4px;
 }
 
 .colors {
@@ -64,7 +95,7 @@ body { font: 13px Helvetica, Arial; }
   width: 300px;
   padding: 15px;
   margin-bottom: 20px;
-  border: 1px solid transparent;
+  border: 3px solid transparent;
   border-radius: 4px;
   pointer-events: none;
 }
