@@ -7,7 +7,17 @@
   </head>
   <body>
     <div class="container">
-      <ul class="nav nav-pills">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#game-options-modal">
+            <button class="btn btn-success" id="start-game">Start Game</button>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#game-options-modal">
+            <button class="btn btn-danger" id="give-up">Give up</button>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#" data-toggle="modal" data-target="#game-options-modal">
             <button class="btn btn-dark">Game Options</button>
@@ -16,7 +26,7 @@
         <li class="nav-item">
           <div class="dropdown nav-link">
             <button class="btn btn-primary dropdown-toggle" id="name-change-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Currently playing as: <span id="current-username"></span>
+              Currently playing as: <span id="current-username">Unknown</span>
             </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#name-modal">
@@ -34,22 +44,22 @@
               <canvas class="whiteboard" ></canvas>
               <div class="alert-box-location">
                 <div id="game-win" class="alert-box">
-                  <p class="text-center">All 10! Nice!</p>
+                  <h6 class="text-center">All 10! Nice!</h6>
                 </div>
                 <div id="game-start" class="alert-box">
-                  <p class="text-center">New game started!</p>
+                  <h6 class="text-center">New game started!</h6>
                 </div>
                 <div id="correct-guess-box" class="alert-box">
-                  <p class="text-center" id="correct-guess"></p>
+                  <h6 class="text-center" id="correct-guess"></h6>
                 </div>
                 <div id="skip-word" class="alert-box">
-                  <p class="text-center">Word skipped!</p>
+                  <h6 class="text-center">Word skipped!</h6>
                 </div>
                 <div id="game-over" class="alert-box">
-                  <p class="text-center">Game over!</p>
+                  <h6 class="text-center">Game over!</h6>
                 </div>
                 <div id="time-out" class="alert-box">
-                  <p class="text-center">Time's up!</p>
+                  <h6 class="text-center">Time's up!</h6>
                 </div>
               </div>
             </div>
@@ -96,13 +106,6 @@
               <div class="row">
                 <div class="col"><button class="float-right btn btn-sm btn-secondary" id="clear">Clear</button></div>
               </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="game-controls">
-              <button class="btn btn-secondary" id="start-game">Start Game</button>
-              <button class="btn btn-secondary" id="give-up">Give up</button>
             </div>
           </div>
         </div>

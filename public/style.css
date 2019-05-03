@@ -14,8 +14,8 @@ body { font: 13px Helvetica, Arial; }
 
 .drawing-area { height: 480px; }
 
-#guess-area { display: inline-block; float: left; }
-#guess-box { height: 480px; width: 300px; border: 1px solid #000; overflow: auto; }
+#guess-area { width: 100%; }
+#guess-box { height: 480px; width: 100%; border: 1px solid #000; overflow: auto; }
 #guess-messages { list-style-type: none; margin: 0; padding: 0; }
 #guess-messages li { padding: 5px 10px; cursor: pointer; }
 #guess-messages li:nth-child(odd) { background: #eee; }
@@ -55,7 +55,7 @@ body { font: 13px Helvetica, Arial; }
 
 .alert-box {
   height: 50px;
-  width: 200px;
+  width: 300px;
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
@@ -67,7 +67,7 @@ body { font: 13px Helvetica, Arial; }
   pointer-events: none;
   position: relative;
   top: -200px;
-  left: 220px;
+  left: 170px;
 }
 
 #game-win, #game-start, #correct-guess-box { 
