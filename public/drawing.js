@@ -7,6 +7,7 @@ drawing.initialize = function(socket, gameLogic) {
   var colors = document.getElementsByClassName('color');
   var context = canvas.getContext('2d');
   var offsetX = parseInt($('.whiteboard')[0].getBoundingClientRect().x);
+  var offsetY = parseInt($('ul.nav')[0].getBoundingClientRect().height);
 
   var current = {
     color: 'black'
@@ -65,7 +66,7 @@ drawing.initialize = function(socket, gameLogic) {
     if (gameLogic.youAreDrawing) {
       drawing = true;
       current.x = e.clientX - offsetX;
-      current.y = e.clientY;
+      current.y = e.clientY - offsetY;
     }
   }
 
@@ -73,17 +74,17 @@ drawing.initialize = function(socket, gameLogic) {
     if (!drawing || !gameLogic.youAreDrawing) { return; }
     drawing = false;
     var whereWeAreGoingX = e.clientX - offsetX;
-    var whereWeAreGoingY = e.clientY;
+    var whereWeAreGoingY = e.clientY - offsetY;
     drawLine(current.x, current.y, whereWeAreGoingX, whereWeAreGoingY, current.color, true);
   }
 
   function onMouseMove(e){
     if (!drawing || !gameLogic.youAreDrawing) { return; }
     var whereWeAreGoingX = e.clientX - offsetX;
-    var whereWeAreGoingY = e.clientY;
+    var whereWeAreGoingY = e.clientY - offsetY;
     drawLine(current.x, current.y, whereWeAreGoingX, whereWeAreGoingY, current.color, true);
     current.x = e.clientX - offsetX;
-    current.y = e.clientY;
+    current.y = e.clientY - offsetY;
   }
 
   function onColorUpdate(e){

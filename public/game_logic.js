@@ -15,8 +15,10 @@ $(function () {
   $('#name-modal').on('hide.bs.modal', function(e) {
     if ($('#name-modal-input').val() !== "") {
       $('#name').val($('#name-modal-input').val());
+      $('#current-username').text($('#name-modal-input').val());
     } else {
       $('#name').val("Unknown");
+      $('#current-username').text("Unknown");
     }
   });
 

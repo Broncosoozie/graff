@@ -7,6 +7,26 @@
   </head>
   <body>
     <div class="container">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#game-options-modal">
+            <button class="btn btn-dark">Game Options</button>
+          </a>
+        </li>
+        <li class="nav-item">
+          <div class="dropdown nav-link">
+            <button class="btn btn-primary dropdown-toggle" id="name-change-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Currently playing as: <span id="current-username"></span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#name-modal">
+                Change name
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
       <div class="row">
         <div class="col">
           <div class="row">
@@ -83,8 +103,6 @@
             <div class="game-controls">
               <button class="btn btn-secondary" id="start-game">Start Game</button>
               <button class="btn btn-secondary" id="give-up">Give up</button>
-              <button data-toggle="modal" class="btn btn-dark" data-target="#name-modal">Change name</button>
-              <button data-toggle="modal" class="btn btn-dark" data-target="#game-options-modal">Game Options</button>
             </div>
           </div>
         </div>
