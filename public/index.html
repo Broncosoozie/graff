@@ -37,10 +37,13 @@
 
           <div style="height: 20px">
             <div class="row h-100">
-              <div class="col-6">
+              <div class="col-5">
                 <h6 class="word d-flex justify-content-center"></h6>
               </div>
-              <div class="col-6">
+              <div class="col-2">
+                <p id="word-count-left" class="d-flex justify-content-center"></p>
+              </div>
+              <div class="col-5">
                 <h6 id="timer" class="d-flex justify-content-center"></h6>
               </div>
             </div>
@@ -159,6 +162,7 @@
                 <div class="form-group">
                   <label for="time-option">Choose Round Length</label>
                   <select id="time-option" name="time-option" class="custom-select">
+                    <option value="5">5 Seconds (For testing only)</option>
                     <option value="60">60 Seconds</option>
                     <option value="120" selected>120 Seconds (Default)</option>
                     <option value="180">180 Seconds</option>

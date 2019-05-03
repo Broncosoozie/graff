@@ -34,6 +34,7 @@ $(function () {
     currentWord = null;
     $('.word').text("");
     $('#timer').text("");
+    $('#word-count-left').text("");
     socket.emit('clear canvas');
   };
 
@@ -65,7 +66,6 @@ $(function () {
 
     socket.emit('skip word');
     socket.emit('clear canvas');
-    // socket.emit('skip word', newIndex);
     socket.emit('current word', wordList[newIndex]);
     currentWord = wordList[newIndex]; // Doesn't matter for drawer, they shouldnt' guess anyway, but they do need to see what is correct
     return false;
@@ -196,9 +196,14 @@ $(function () {
     $("#timer").text(currentTimeLeft);
   });
 
-  socket.on('time out', function() {
+  socket.on('current word index', function(wordIndex, wordListLength) {
+    $("#word-count-left").text("Word " + wordIndex + "/" + wordListLength);
+  });
+
+  socket.on('time out', function(wordFailedOn) {
     resetBoard();
 
+    $("div#time-out").text("Time's up! Word was: " + wordFailedOn);
     $("div#time-out").fadeIn(300).delay(3000).fadeOut(400);
   });
 

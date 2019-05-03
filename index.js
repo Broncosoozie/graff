@@ -13,6 +13,9 @@ var stateList = wholeWordListFile.states;
 var currentDrawer;
 var gameInProgress = false;
 var gameInterval;
+var gameOptions = {};
+var currentWordIndex;
+var wordsToDraw;
 
 var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
 
@@ -45,15 +48,22 @@ io.on('connection', function(socket) {
   socket.on('start game', function(options) {
     console.log('Game starting...');
     console.log(options);
-    var wordsToDraw = _.sampleSize(wordList, parseInt(options.wordCountOption));
+
+    gameOptions = options;
+    currentWordIndex = 0;
+    wordsToDraw = _.sampleSize(wordList, parseInt(options.wordCountOption));
     gameInProgress = true;
+    currentDrawer = socket.id
+
     console.log('Sending Wordlist: ' + wordsToDraw);
     console.log('To: ' + socket.id);
-    currentDrawer = socket.id
+
     io.emit('clear guess list');
     io.emit('start new game');
     io.to(`${currentDrawer}`).emit('your turn', wordsToDraw);
     socket.broadcast.emit('current word', wordsToDraw[0]);
+    io.emit('current word index', 1, gameOptions.wordCountOption);
+
     var timer = parseInt(options.timeOption);
     io.emit('current timer', timer);
     if (timer !== 0) {
@@ -61,7 +71,7 @@ io.on('connection', function(socket) {
         timer--;
         io.emit('current timer', timer);
         if (timer === 0) {
-          io.emit('time out');
+          io.emit('time out', wordsToDraw[currentWordIndex]);
           gameInProgress = false;
           clearInterval(gameInterval);
         }
@@ -70,6 +80,10 @@ io.on('connection', function(socket) {
   });
 
   socket.on('current word', function(currentWord) {
+    currentWordIndex = _.findIndex(wordsToDraw, function(word) {
+      return word === currentWord;
+    });
+    io.emit('current word index', currentWordIndex + 1, gameOptions.wordCountOption);
     socket.broadcast.emit('current word', currentWord);
   });
 
@@ -90,9 +104,9 @@ io.on('connection', function(socket) {
   });
 
   socket.on('correct guess', function() {
-    // socket.broadcast.emit('correct guess');
+    currentWordIndex++;
+    io.emit('current word index', currentWordIndex, gameOptions.wordCountOption);
     io.to(`${currentDrawer}`).emit('correct guess');
-    // io.emit('correct guess');
   });
 
   socket.on('highlight guess', function(id) {
