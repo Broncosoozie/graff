@@ -138,6 +138,11 @@ $(function () {
     e.preventDefault();
     $('#time-option').val('120');
     $('#word-count-option').val('10');
+    _.each($('#word-list-option input'), function(checkbox) {
+      $(checkbox).prop('checked', true);
+    });
+
+    return false;
   });
 
   socket.on('your turn', function(wordsToDraw) {
@@ -271,12 +276,14 @@ $(function () {
   });
 
   socket.on('word list selections', function(wordListSelections) {
+    $('#word-list-option').empty();
+
     _.each(wordListSelections, function(wordList) {
       var input = $('<input class="custom-control-input"></input>');
       input.attr('value', wordList);
       input.attr('id', wordList + '-list');
       input.attr('type', 'checkbox');
-      input.attr('checked', true);
+      input.prop('checked', true);
       var label = $('<label class="custom-control-label word-list-label">' + wordList + '</label>');
       label.attr('for', wordList + '-list');
       var checkBox = $('<div class="custom-control custom-checkbox"></div>').append(input).append(label);

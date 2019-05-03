@@ -20,6 +20,10 @@ body { font: 13px Helvetica, Arial; }
 #guess-messages li { padding: 5px 10px; cursor: pointer; }
 #guess-messages li:nth-child(odd) { background: #eee; }
 
+#guess-form { margin-top: 20px; }
+#guess-input { width: 315px; }
+#guess-m { width: 100%; }
+
 .whiteboard {
   width: 640px;
   height: 480px;
