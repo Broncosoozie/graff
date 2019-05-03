@@ -54,6 +54,18 @@ body {
   width: 50px;
 }
 
+#sound-modal-form div input {
+  padding: 10px 0px 20px;
+}
+
+#reset-default-sound-options {
+  margin-left: 5px;
+}
+
+#save-sound-options {
+  margin-left: 5px;
+}
+
 #main-container {
   margin-top: 25px;
 }

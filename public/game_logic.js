@@ -6,10 +6,14 @@ $(function () {
   var currentWord;
   var gameLogic = {youAreDrawing: false};
   var tada = new Audio('sounds/tada.flac');
-  var currentVolume = 0.2;
   var gameOverSound = new Audio('sounds/gameOver.wav');
   var correctSound = new Audio('sounds/correct.wav');
   var skipSound = new Audio('sounds/skip.wav');
+
+  var tadaVolume = 0.2;
+  var gameOverVolume = 0.2;
+  var correctVolume = 0.2;
+  var skipVolume = 0.2;
 
   adjustSoundVolumes();
 
@@ -32,10 +36,10 @@ $(function () {
   });
 
   function adjustSoundVolumes() {
-    tada.volume = currentVolume;
-    gameOverSound.volume = currentVolume;
-    correctSound.volume = currentVolume;
-    skipSound.volume = currentVolume;
+    tada.volume = tadaVolume;
+    gameOverSound.volume = gameOverVolume;
+    correctSound.volume = correctVolume;
+    skipSound.volume = skipVolume;
   };
 
   function correctGuess(guess, actual) {
@@ -161,16 +165,35 @@ $(function () {
 
     return false;
   });
+  
+  $('#mute-all-sounds').click(function(e) {
+    e.preventDefault();
+    $('#game-win-sound').val("0");
+    $('#game-over-sound').val("0");
+    $('#correct-sound').val("0");
+    $('#skip-sound').val("0");
 
-  $('#sound-toggle').click(function(e) {
-    $('#sound-toggle i').toggleClass('fa-bell fa-bell-slash');
-    if (currentVolume == 0) {
-      currentVolume = 0.2;
-      adjustSoundVolumes();
-    } else {
-      currentVolume = 0;
-      adjustSoundVolumes();
-    }
+    return false;
+  });
+
+  $('#reset-default-sound-options').click(function(e) {
+    e.preventDefault();
+    $('#game-win-sound').val("0.2");
+    $('#game-over-sound').val("0.2");
+    $('#correct-sound').val("0.2");
+    $('#skip-sound').val("0.2");
+
+    return false;
+  });
+
+  $('#save-sound-options').click(function(e) {
+    e.preventDefault();
+
+    tadaVolume = $('#game-win-sound').val();
+    gameOverVolume = $('#game-over-sound').val();
+    correctVolume = $('#correct-sound').val();
+    skipVolume = $('#skip-sound').val();
+    adjustSoundVolumes();
   });
 
   socket.on('your turn', function(wordsToDraw) {

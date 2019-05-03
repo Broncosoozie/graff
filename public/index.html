@@ -29,7 +29,7 @@
         <ul class="nav mr-sm-2>
           <li class="nav-item">
             <div class="nav-link">
-              <button id="sound-toggle" class="btn btn-secondary"><i class="fas fa-bell"></i></button>
+              <button id="sound-toggle" data-toggle="modal" data-target="#sound-modal" class="btn btn-secondary"><i class="fas fa-bell"></i></button>
             </div>
           </li>
           <li class="nav-item">
@@ -181,6 +181,41 @@
                 </div>
 
                 <button data-dismiss="modal" class="btn btn-primary">That's me!</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="sound-modal" aria-hidden="true" aria-labelledby="sound-modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Sound Options</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form id="sound-modal-form" class="form-inline">
+                <div class="form-group col">
+                  <label for="game-win-sound">Game Win volume</label>
+                  <input type="range" class="custom-range" min="0" max="1" step="0.1" id="game-win-sound" value="0.2" />
+
+                  <label for="game-over-sound">Game Over volume</label>
+                  <input type="range" class="custom-range" min="0" max="1" step="0.1" id="game-over-sound" value="0.2" />
+
+                  <label for="correct-sound">Correct guess volume</label>
+                  <input type="range" class="custom-range" min="0" max="1" step="0.1" id="correct-sound" value="0.2" />
+
+                  <label for="skip-sound">Skip volume</label>
+                  <input type="range" class="custom-range" min="0" max="1" step="0.1" id="skip-sound" value="0.2" />
+                </div>
+
+                <button id="mute-all-sounds" class="btn btn-warning">Mute all</button>
+                <button id="reset-default-sound-options" class="btn btn-secondary">Reset Defaults</button>
+                <button id="save-sound-options" data-dismiss="modal" class="btn btn-primary">Save</button>
               </form>
             </div>
           </div>
