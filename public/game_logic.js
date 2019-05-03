@@ -6,15 +6,15 @@ $(function () {
   var currentWord;
   var gameLogic = {youAreDrawing: false};
   var tada = new Audio('sounds/tada.flac');
-  tada.volume = 0.5;
+  var currentVolume = 0.2;
   var gameOverSound = new Audio('sounds/gameOver.wav');
-  gameOverSound.volume = 0.3;
   var correctSound = new Audio('sounds/correct.wav');
-  correctSound.volume = 0.5;
   var skipSound = new Audio('sounds/skip.wav');
-  skipSound.volume = 0.5;
+
+  adjustSoundVolumes();
 
   drawing.initialize(socket, gameLogic);
+
   $('#skip').attr("disabled", true);
   $('#clear').attr("disabled", true);
   $('#give-up').attr("disabled", true);
@@ -30,6 +30,13 @@ $(function () {
       $('#current-username').text("Unknown");
     }
   });
+
+  function adjustSoundVolumes() {
+    tada.volume = currentVolume;
+    gameOverSound.volume = currentVolume;
+    correctSound.volume = currentVolume;
+    skipSound.volume = currentVolume;
+  };
 
   function correctGuess(guess, actual) {
     var actualModified = actual.replace(/[\s\'\.\-]+/, '');
@@ -153,6 +160,17 @@ $(function () {
     });
 
     return false;
+  });
+
+  $('#sound-toggle').click(function(e) {
+    $('#sound-toggle i').toggleClass('fa-bell fa-bell-slash');
+    if (currentVolume == 0) {
+      currentVolume = 0.2;
+      adjustSoundVolumes();
+    } else {
+      currentVolume = 0;
+      adjustSoundVolumes();
+    }
   });
 
   socket.on('your turn', function(wordsToDraw) {

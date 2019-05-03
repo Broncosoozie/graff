@@ -50,6 +50,10 @@ body {
   color: #FFF;
 }
 
+#sound-toggle {
+  width: 50px;
+}
+
 #main-container {
   margin-top: 25px;
 }
