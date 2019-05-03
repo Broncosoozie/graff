@@ -1,5 +1,5 @@
 {
-  "baseWords": [
+  "Base Words": [
     "apple",
     "aquaman",
     "arm",
@@ -363,7 +363,7 @@
 
   ],
 
-  "leagueChamps": [
+  "League Champions": [
     "Aatrox",
     "Ahri",
     "Akali",
@@ -509,7 +509,7 @@
     "Zyra"
   ],
 
-  "states": [
+  "States": [
     "Alaska",
     "Alabama",
     "Arkansas",

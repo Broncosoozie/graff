@@ -40,6 +40,14 @@ $(function () {
     socket.emit('clear canvas');
   };
 
+  function getWordListSelections() {
+    var wordListSelections = _.map($('#word-list-option input:checked'), function(wordListInput) {
+      return $(wordListInput).val();
+    });
+
+    return wordListSelections;
+  };
+
   $('#name-set').submit(function(e) {
     e.preventDefault();
     socket.emit('name change', $('#name').val());
@@ -74,10 +82,19 @@ $(function () {
   });
 
   $('#start-game').click(function(e) {
+    var wordLists = getWordListSelections();
+
+    if (_.isEmpty(wordLists)) {
+      $("div#no-wordlist-selected").fadeIn(300).delay(3000).fadeOut(400);
+      return false;
+    }
+
     var gameOptions = {
       timeOption: $('#time-option').val(),
-      wordCountOption: $('#word-count-option').val()
+      wordCountOption: $('#word-count-option').val(),
+      wordLists: getWordListSelections()
     }
+
     socket.emit('start game', gameOptions);
     return false;
   });
@@ -240,5 +257,20 @@ $(function () {
 
   socket.on('game in progress', function() {
     $('#start-game').attr("disabled", true);
+  });
+
+  socket.on('word list selections', function(wordListSelections) {
+    _.each(wordListSelections, function(wordList) {
+      var input = $('<input class="custom-control-input"></input>');
+      input.attr('value', wordList);
+      input.attr('id', wordList + '-list');
+      input.attr('type', 'checkbox');
+      input.attr('checked', true);
+      var label = $('<label class="custom-control-label word-list-label">' + wordList + '</label>');
+      label.attr('for', wordList + '-list');
+      var checkBox = $('<div class="custom-control custom-checkbox"></div>').append(input).append(label);
+
+      $('#word-list-option').append(checkBox);
+    });
   });
 });

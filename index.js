@@ -7,23 +7,27 @@ var _ = require('lodash');
 app.use(express.static(__dirname + '/public'));
 
 var wholeWordListFile = require(__dirname + '/data/wordlist.json');
-var baseWordList = wholeWordListFile.baseWords;
-var leagueChampsList = wholeWordListFile.leagueChamps;
-var stateList = wholeWordListFile.states;
+// var baseWordList = wholeWordListFile["Base Words"];
+// var leagueChampsList = wholeWordListFile["League Champions"];
+// var stateList = wholeWordListFile["States"];
+var wordListSelections = _.keys(wholeWordListFile);
 var currentDrawer;
 var gameInProgress = false;
 var gameInterval;
 var gameOptions = {};
 var currentWordIndex;
 var wordsToDraw;
+var wordList;
 
-var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
+// var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
 
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + 'index.html');
 // });
 
 io.on('connection', function(socket) {
+  socket.emit('word list selections', wordListSelections);
+
   if (gameInProgress) {
     socket.emit('game in progress');
   }
@@ -41,6 +45,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+
   socket.on('clear canvas', function() {
     io.emit('clear canvas');
   });
@@ -51,6 +56,13 @@ io.on('connection', function(socket) {
 
     gameOptions = options;
     currentWordIndex = 0;
+
+    wordList = [];
+
+    _.each(options.wordLists, function(wordListSelection) {
+      wordList = wordList.concat(wholeWordListFile[wordListSelection]);
+    });
+
     wordsToDraw = _.sampleSize(wordList, parseInt(options.wordCountOption));
     gameInProgress = true;
     currentDrawer = socket.id
