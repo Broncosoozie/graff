@@ -31,13 +31,15 @@ body { font: 13px Helvetica, Arial; }
 }
 
 .colors {
-  padding: 4px 22px;
+  padding: 4px 0px;
 }
 
 .color {
   display: inline-block;
   height: 24px;
   width: 24px;
+  margin-right: 5px;
+  border-radius: 4px;
 }
 
 .correct { color: blue; }
