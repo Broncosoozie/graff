@@ -279,6 +279,7 @@ $(function () {
 
   socket.on('word list selections', function(wordListSelections) {
     $('#word-list-option').empty();
+    $('#word-list-option').append($('<label>Choose Word Lists</label>'));
 
     _.each(wordListSelections, function(wordList) {
       var input = $('<input class="custom-control-input"></input>');
