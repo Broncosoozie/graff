@@ -34,8 +34,12 @@ body {
 #guess-m { width: 100%; }
 
 #chat-messages { list-style-type: none; margin: 0; padding: 0; }
-#chat-messages li { padding: 5px 10px; cursor: pointer; }
+#chat-messages li { padding: 5px 10px; }
 #chat-messages li:nth-child(odd) { background: #eee; }
+
+#user-list { list-style-type: none; margin: 0; padding: 0; }
+#user-list li { padding: 5px 10px; }
+#user-list li:nth-child(odd) { background: #eee; }
 
 #drawing-controls {
   margin-top: 15px;
@@ -157,7 +161,7 @@ body {
   width: 130px;
 }
 
-#user-list {
+#user-list-box {
   height: 350px;
   border: 3px solid #000;
   border-radius: 4px;

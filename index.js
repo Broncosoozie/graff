@@ -18,12 +18,18 @@ var gameOptions = {};
 var currentWordIndex;
 var wordsToDraw;
 var wordList;
+var connectedPlayers = [];
 
 // var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
 
 // app.get('/', function(request, response) {
 //   response.sendFile(__dirname + 'index.html');
 // });
+
+
+function findPlayerInLobby(socketId) {
+  return _.find(connectedPlayers, ['socketId', socketId]);
+};
 
 io.on('connection', function(socket) {
   socket.emit('word list selections', wordListSelections);
@@ -33,6 +39,23 @@ io.on('connection', function(socket) {
   }
 
   console.log('User connected with Socket ID: ' + socket.id);
+
+  socket.on('user changed name', function(username) {
+    var potentialPlayer = findPlayerInLobby(socket.id);
+    if (potentialPlayer !== undefined) {
+      var oldUsername = potentialPlayer.username;
+      potentialPlayer.username = username;
+
+      io.emit('user name change', oldUsername, username);
+    } else {
+      connectedPlayers.push({
+        socketId: socket.id,
+        username: username
+      });
+    }
+
+    io.emit('user list updated', connectedPlayers);
+  });
 
   socket.on('guess message', function(username, message, now) {
     console.log('Username: ' + username + ' is guessing: ' + message);
@@ -126,6 +149,12 @@ io.on('connection', function(socket) {
   });
 
   socket.on('disconnect', function() {
+    _.remove(connectedPlayers, function(player) {
+      return player.socketId == socket.id;
+    });
+
+    io.emit('user list updated', connectedPlayers);
+
     console.log('User with Socket ID: ' + socket.id + ' disconnected');
   });
 });

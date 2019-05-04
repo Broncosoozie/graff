@@ -30,6 +30,7 @@ $(function () {
       $('#name-modal-input').val("Unknown");
     }
     $('#current-username').text($('#name-modal-input').val());
+    socket.emit('user changed name', $('#name-modal-input').val());
   });
 
   function adjustSoundVolumes() {
@@ -271,10 +272,27 @@ $(function () {
 
   socket.on('chat message', function(username, message, now) {
     var fullMessage = username + ": " + message;
-    var listItem;
 
-    listItem = $('<li>').text(fullMessage);
+    var listItem = $('<li>').text(fullMessage);
     listItem.attr('id', now);
+
+    $('#chat-messages').append(listItem);
+    $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
+  });
+
+  socket.on('user list updated', function(userList) {
+    $('#user-list').empty();
+
+    _.each(userList, function(user) {
+      $('#user-list').append($('<li>').text(user.username));
+    });
+  });
+
+  socket.on('user name change', function(oldUsername, newUsername) {
+    var fullMessage = 'SYSTEM: ' + oldUsername + ' has changed their name to ' + newUsername;
+    var listItem = $('<li>').text(fullMessage);
+    listItem.attr('id', $.now);
+    listItem.addClass('text-white bg-info');
 
     $('#chat-messages').append(listItem);
     $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
