@@ -7,7 +7,7 @@ Things still left to do (in no particular order):
   * ~~Add sounds~~
   * ~~Make sounds mutable~~
   * Add word suggestion box
-  * Add nickname/cookie storing
+  * ~~Add nickname/cookie storing~~
   * ~~Add list of who is online~~
   * Add turns
   * Add teams/no team game modes
