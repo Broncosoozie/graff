@@ -7,9 +7,6 @@ var _ = require('lodash');
 app.use(express.static(__dirname + '/public'));
 
 var wholeWordListFile = require(__dirname + '/data/wordlist.json');
-// var baseWordList = wholeWordListFile["Base Words"];
-// var leagueChampsList = wholeWordListFile["League Champions"];
-// var stateList = wholeWordListFile["States"];
 var wordListSelections = _.keys(wholeWordListFile);
 var currentDrawer;
 var gameInProgress = false;
@@ -20,13 +17,7 @@ var wordsToDraw;
 var wordList;
 var connectedPlayers = [];
 
-var VERSION = "0.0.4";
-
-// var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
-
-// app.get('/', function(request, response) {
-//   response.sendFile(__dirname + 'index.html');
-// });
+var VERSION = "0.0.5";
 
 
 function findPlayerInLobby(socketId) {

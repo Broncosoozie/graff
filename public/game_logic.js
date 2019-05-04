@@ -1,6 +1,8 @@
 'use strict';
 
 $(function () {
+  var currentGameVersion = "0.0.5";
+
   var socket = io();
   var wordList = [];
   var currentWord;
@@ -15,16 +17,11 @@ $(function () {
   var correctVolume = 0.2;
   var skipVolume = 0.2;
 
-  var currentGameVersion = "0.0.4";
-
   adjustSoundVolumes();
 
   drawing.initialize(socket, gameLogic);
 
-  $('#skip').attr("disabled", true);
-  $('#clear').attr("disabled", true);
-  $('#give-up').attr("disabled", true);
-  $('#give-up').hide();
+  resetBoard();
 
   $('#name-modal').modal();
   $('#name-modal').on('hide.bs.modal', function(e) {
@@ -60,9 +57,9 @@ $(function () {
     $('#clear').attr("disabled", true);
     $('#chat-m').attr("disabled", false);
     $('#chat-m').attr("placeholder", "Talk to the room!");
-    $('#guess-m').attr("disabled", false);
-    $('#guess-m').attr("placeholder", "Enter your guess");
-    $('#guess-button').attr("disabled", false);
+    $('#guess-m').attr("disabled", true);
+    $('#guess-m').attr("placeholder", "No game in progress");
+    $('#guess-button').attr("disabled", true);
     $('#chat-button').attr("disabled", false);
     $('#give-up').attr("disabled", true);
     $('#give-up').hide();
@@ -106,12 +103,10 @@ $(function () {
     }
     $('.word').text(wordList[newIndex]);
 
-    console.log("Skipping! New word: " + wordList[newIndex]);
-
     socket.emit('skip word');
     socket.emit('clear canvas');
     socket.emit('current word', wordList[newIndex]);
-    currentWord = wordList[newIndex]; // Doesn't matter for drawer, they shouldnt' guess anyway, but they do need to see what is correct
+    currentWord = wordList[newIndex];
     return false;
   });
 
@@ -129,14 +124,6 @@ $(function () {
       wordLists: getWordListSelections()
     }
 
-    $('#start-game').hide();
-    $('#give-up').show();
-    $('#chat-m').attr('disabled', true);
-    $('#chat-button').attr('disabled', true);
-    $('#chat-m').attr('placeholder', "You can't talk while you're drawing!");
-    $('#guess-m').attr('disabled', true);
-    $('#guess-m').attr('placeholder', "You can't guess your own drawings!");
-    $('#guess-button').attr('disabled', true);
 
     socket.emit('start game', gameOptions);
     return false;
@@ -210,8 +197,6 @@ $(function () {
   });
 
   socket.on('your turn', function(wordsToDraw) {
-    console.log('your turn!');
-    console.log(wordsToDraw);
     wordList = wordsToDraw;
     currentWord = wordList[0];
     $('.word').text(wordList[0]);
@@ -219,6 +204,12 @@ $(function () {
     $('#skip').attr('disabled', false);
     $('#clear').attr('disabled', false);
     $('#give-up').attr('disabled', false);
+    $('#chat-m').attr('disabled', true);
+    $('#chat-button').attr('disabled', true);
+    $('#chat-m').attr('placeholder', "You can't talk while you're drawing!");
+    $('#guess-m').attr('disabled', true);
+    $('#guess-m').attr('placeholder', "You can't guess your own drawings!");
+    $('#guess-button').attr('disabled', true);
   });
 
   socket.on('start new game', function(wordListsEnabled) {
@@ -230,6 +221,9 @@ $(function () {
       $('#skip').attr("disabled", true);
       $('#clear').attr("disabled", true);
       $('#give-up').attr("disabled", true);
+      $('#guess-m').attr("disabled", false);
+      $('#guess-m').attr("placeholder", "Enter your guess");
+      $('#guess-button').attr("disabled", false);
     }
 
     var fullMessage = 'SYSTEM: Game started with word lists ' + wordListsEnabled.join(', ') + ' enabled';
@@ -358,7 +352,6 @@ $(function () {
     if (wordList.length == 0) {
       socket.emit('game win');
     } else {
-      console.log('Correct! New word: ' + wordList[newIndex]);
       $('.word').text(wordList[newIndex]);
       socket.emit('clear canvas');
       socket.emit('current word', wordList[newIndex]);
