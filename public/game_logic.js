@@ -50,6 +50,17 @@ $(function () {
     $(elementId).fadeIn(300).delay(delay).fadeOut(400);
   };
 
+  function addMessage(message, options) {
+    var listItem = $('<li>').text(message);
+    listItem.attr('id', options.listItemId);
+    if (options.listItemClasses !== null) {
+      listItem.addClass(options.listItemClasses);
+    }
+
+    $(options.messagesId).append(listItem);
+    $(options.boxId).animate({ scrollTop: $(options.messagesId).prop("scrollHeight") }, 200);
+  };
+
   function resetBoard() {
     $('#start-game').attr("disabled", false);
     $('#start-game').show();
@@ -78,12 +89,6 @@ $(function () {
 
     return wordListSelections;
   };
-
-  $('#name-set').submit(function(e) {
-    e.preventDefault();
-    socket.emit('name change', $('#name').val());
-    return false;
-  });
 
   $('#clear').click(function(e) {
     e.preventDefault();
@@ -227,12 +232,13 @@ $(function () {
     }
 
     var fullMessage = 'SYSTEM: Game started with word lists ' + wordListsEnabled.join(', ') + ' enabled';
-    var listItem = $('<li>').text(fullMessage);
-    listItem.attr('id', $.now);
-    listItem.addClass('text-white bg-info');
-
-    $('#chat-messages').append(listItem);
-    $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
+    var options = {
+      messagesId: '#chat-messages',
+      boxId: '#chat-box',
+      listItemId: $.now,
+      listItemClasses: 'text-white bg-info'
+    }
+    addMessage(fullMessage, options);
   });
 
   socket.on('give up', function() {
@@ -276,12 +282,13 @@ $(function () {
 
   socket.on('chat message', function(username, message, now) {
     var fullMessage = username + ": " + message;
+    var options = {
+      messagesId: '#chat-messages',
+      boxId: '#chat-box',
+      listItemId: now
+    }
 
-    var listItem = $('<li>').text(fullMessage);
-    listItem.attr('id', now);
-
-    $('#chat-messages').append(listItem);
-    $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
+    addMessage(fullMessage, options);
   });
 
   socket.on('user list updated', function(userList) {
@@ -294,12 +301,14 @@ $(function () {
 
   socket.on('user name change', function(oldUsername, newUsername) {
     var fullMessage = 'SYSTEM: ' + oldUsername + ' has changed their name to ' + newUsername;
-    var listItem = $('<li>').text(fullMessage);
-    listItem.attr('id', $.now);
-    listItem.addClass('text-white bg-info');
+    var options = {
+      messagesId: '#chat-messages',
+      boxId: '#chat-box',
+      listItemId: $.now,
+      listItemClasses: 'text-white bg-info'
+    }
 
-    $('#chat-messages').append(listItem);
-    $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
+    addMessage(fullMessage, options);
   });
 
   socket.on('current word', function(newWord) {
