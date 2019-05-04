@@ -1,8 +1,6 @@
 'use strict';
 
 $(function () {
-  var currentGameVersion = "0.0.6";
-
   var socket = io();
   var wordList = [];
   var currentWord;
@@ -417,8 +415,9 @@ $(function () {
   });
 
   socket.on('version', function(version) {
-    if (version !== currentGameVersion) {
+    if (version !== cookieHandler.readCookie('VERSION')) {
       $('#update-modal').modal();
+      cookieHandler.createCookie('VERSION', version, 10);
     }
   });
 });

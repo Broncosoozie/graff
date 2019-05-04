@@ -17,8 +17,7 @@ var wordsToDraw;
 var wordList;
 var connectedPlayers = [];
 
-var VERSION = "0.0.6";
-
+var VERSION = require('./package.json').version;
 
 function findPlayerInLobby(socketId) {
   return _.find(connectedPlayers, ['socketId', socketId]);
