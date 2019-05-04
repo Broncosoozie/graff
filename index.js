@@ -17,7 +17,7 @@ var wordsToDraw;
 var wordList;
 var connectedPlayers = [];
 
-var VERSION = "0.0.5";
+var VERSION = "0.0.6";
 
 
 function findPlayerInLobby(socketId) {
@@ -35,13 +35,13 @@ io.on('connection', function(socket) {
 
   console.log('User connected with Socket ID: ' + socket.id);
 
-  socket.on('user changed name', function(username) {
+  socket.on('user changed name', function(username, suppressMessage) {
     var potentialPlayer = findPlayerInLobby(socket.id);
     if (potentialPlayer !== undefined) {
       var oldUsername = potentialPlayer.username;
       potentialPlayer.username = username;
 
-      io.emit('user name change', oldUsername, username);
+      io.emit('user name change', oldUsername, username, suppressMessage);
     } else {
       connectedPlayers.push({
         socketId: socket.id,

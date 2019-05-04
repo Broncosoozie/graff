@@ -1,7 +1,7 @@
 'use strict';
 
 $(function () {
-  var currentGameVersion = "0.0.5";
+  var currentGameVersion = "0.0.6";
 
   var socket = io();
   var wordList = [];
@@ -23,13 +23,23 @@ $(function () {
 
   resetBoard();
 
-  $('#name-modal').modal();
+  if (cookieHandler.readCookie('username') === null) {
+    $('#name-modal').modal();
+  } else {
+    var username = cookieHandler.readCookie('username');
+    $('#name-modal-input').val(username);
+    $('#current-username').text(username);
+    socket.emit('user changed name', username, true);
+  };
+
   $('#name-modal').on('hide.bs.modal', function(e) {
     if ($('#name-modal-input').val() === "") {
       $('#name-modal-input').val("Unknown");
     }
-    $('#current-username').text($('#name-modal-input').val());
-    socket.emit('user changed name', $('#name-modal-input').val());
+    var username = $('#name-modal-input').val();
+    cookieHandler.createCookie('username', username, 5);
+    $('#current-username').text(username);
+    socket.emit('user changed name', username);
   });
 
   function adjustSoundVolumes() {
@@ -128,7 +138,6 @@ $(function () {
       wordCountOption: $('#word-count-option').val(),
       wordLists: getWordListSelections()
     }
-
 
     socket.emit('start game', gameOptions);
     return false;
@@ -299,16 +308,18 @@ $(function () {
     });
   });
 
-  socket.on('user name change', function(oldUsername, newUsername) {
-    var fullMessage = 'SYSTEM: ' + oldUsername + ' has changed their name to ' + newUsername;
-    var options = {
-      messagesId: '#chat-messages',
-      boxId: '#chat-box',
-      listItemId: $.now,
-      listItemClasses: 'text-white bg-info'
-    }
+  socket.on('user name change', function(oldUsername, newUsername, suppressMessage) {
+    if (!suppressMessage) {
+      var fullMessage = 'SYSTEM: ' + oldUsername + ' has changed their name to ' + newUsername;
+      var options = {
+        messagesId: '#chat-messages',
+        boxId: '#chat-box',
+        listItemId: $.now,
+        listItemClasses: 'text-white bg-info'
+      }
 
-    addMessage(fullMessage, options);
+      addMessage(fullMessage, options);
+    }
   });
 
   socket.on('current word', function(newWord) {
