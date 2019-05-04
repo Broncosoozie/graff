@@ -89,7 +89,12 @@ $(function () {
     $('.word').text("");
     $('#timer').text("");
     $('#word-count-left').text("");
+    $('#user-list li i').remove();
     socket.emit('clear canvas');
+  };
+
+  function markDrawer(socketId) {
+    $('#' + socketId).append('<i class="fas fa-paint-brush"></i>');
   };
 
   function getWordListSelections() {
@@ -226,7 +231,7 @@ $(function () {
     $('#guess-button').attr('disabled', true);
   });
 
-  socket.on('start new game', function(wordListsEnabled) {
+  socket.on('start new game', function(wordListsEnabled, socketIdWhoStarted) {
     flashMessage('#game-start', 1500);
     $('#start-game').hide();
     $('#give-up').show();
@@ -248,6 +253,8 @@ $(function () {
       listItemClasses: 'text-white bg-info'
     }
     addMessage(fullMessage, options);
+
+    markDrawer(socketIdWhoStarted);
   });
 
   socket.on('give up', function() {
@@ -304,7 +311,9 @@ $(function () {
     $('#user-list').empty();
 
     _.each(userList, function(user) {
-      $('#user-list').append($('<li>').text(user.username));
+      var listItem = $('<li>').text(user.username + ' ');
+      listItem.attr('id', user.socketId);
+      $('#user-list').append(listItem);
     });
   });
 
