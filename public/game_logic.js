@@ -221,7 +221,7 @@ $(function () {
     $('#give-up').attr('disabled', false);
   });
 
-  socket.on('start new game', function() {
+  socket.on('start new game', function(wordListsEnabled) {
     flashMessage('#game-start', 1500);
     $('#start-game').hide();
     $('#give-up').show();
@@ -231,6 +231,14 @@ $(function () {
       $('#clear').attr("disabled", true);
       $('#give-up').attr("disabled", true);
     }
+
+    var fullMessage = 'SYSTEM: Game started with word lists ' + wordListsEnabled.join(', ') + ' enabled';
+    var listItem = $('<li>').text(fullMessage);
+    listItem.attr('id', $.now);
+    listItem.addClass('text-white bg-info');
+
+    $('#chat-messages').append(listItem);
+    $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
   });
 
   socket.on('give up', function() {
