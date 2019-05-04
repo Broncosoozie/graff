@@ -34,14 +34,14 @@ io.on('connection', function(socket) {
 
   console.log('User connected with Socket ID: ' + socket.id);
 
-  socket.on('chat message', function(username, message) {
-    console.log('Socket ID: ' + socket.id + ' is Username: ' + username + ' and sending message: ' + message);
-    io.emit('chat message', username + ': ' + message);
-  });
-
   socket.on('guess message', function(username, message, now) {
     console.log('Username: ' + username + ' is guessing: ' + message);
     io.emit('guess message', username, message, now);
+  });
+
+  socket.on('chat message', function(username, message, now) {
+    console.log('Username: ' + username + ' is chatting: ' + message);
+    io.emit('chat message', username, message, now);
   });
 
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));

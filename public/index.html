@@ -151,16 +151,28 @@
       </div>
 
       <div class="row">
-        <div id="inputs" class="invisible">
-          <div id="name-set">
-            <label>Name: </label>
-            <input id="name" autocomplete="off" value="Unknown" />
+        <div class="col-2">
+          <div id="user-list"></div>
+        </div>
+
+        <div class="col-10">
+          <div class="row">
+            <div class="col">
+              <form id="message-form">
+                <div class="input-group">
+                  <input id="chat-m" class="form-control" autocomplete="off" placeholder="Talk to the room!"/>
+
+                  <button id="chat-button" class="btn btn-primary">Send</button>
+                </div>
+              </form>
+            </div>
           </div>
-          <!-- <div id="messages&#45;input"> -->
-          <!--   <form id="main&#45;chat" action=""> -->
-          <!--     <input id="m" autocomplete="off" /><button>Send</button> -->
-          <!--   </form> -->
-          <!-- </div> -->
+
+          <div class="row">
+            <div id="chat-box">
+              <ul id="chat-messages"></ul>
+            </div>
+          </div>
         </div>
       </div>
 

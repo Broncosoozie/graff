@@ -33,6 +33,10 @@ body {
 #guess-input { width: 315px; }
 #guess-m { width: 100%; }
 
+#chat-messages { list-style-type: none; margin: 0; padding: 0; }
+#chat-messages li { padding: 5px 10px; cursor: pointer; }
+#chat-messages li:nth-child(odd) { background: #eee; }
+
 #drawing-controls {
   margin-top: 15px;
 }
@@ -40,6 +44,7 @@ body {
 #game-info {
   height: 20px;
   margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 #word-count-left {
@@ -150,4 +155,25 @@ body {
 
 #start-game, #give-up {
   width: 130px;
+}
+
+#user-list {
+  height: 350px;
+  border: 3px solid #000;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+#chat-box {
+  margin-top: 12px;
+  height: 300px;
+  border: 3px solid #000;
+  border-radius: 4px;
+  overflow: auto;
+  width: 100%;
+}
+
+#chat-button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }

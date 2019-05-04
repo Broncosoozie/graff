@@ -26,13 +26,10 @@ $(function () {
 
   $('#name-modal').modal();
   $('#name-modal').on('hide.bs.modal', function(e) {
-    if ($('#name-modal-input').val() !== "") {
-      $('#name').val($('#name-modal-input').val());
-      $('#current-username').text($('#name-modal-input').val());
-    } else {
-      $('#name').val("Unknown");
-      $('#current-username').text("Unknown");
+    if ($('#name-modal-input').val() === "") {
+      $('#name-modal-input').val("Unknown");
     }
+    $('#current-username').text($('#name-modal-input').val());
   });
 
   function adjustSoundVolumes() {
@@ -58,6 +55,12 @@ $(function () {
     $('#start-game').show();
     $('#skip').attr("disabled", true);
     $('#clear').attr("disabled", true);
+    $('#chat-m').attr("disabled", false);
+    $('#chat-m').attr("placeholder", "Talk to the room!");
+    $('#guess-m').attr("disabled", false);
+    $('#guess-m').attr("placeholder", "Enter your guess");
+    $('#guess-button').attr("disabled", false);
+    $('#chat-button').attr("disabled", false);
     $('#give-up').attr("disabled", true);
     $('#give-up').hide();
     gameLogic.youAreDrawing = false;
@@ -125,6 +128,12 @@ $(function () {
 
     $('#start-game').hide();
     $('#give-up').show();
+    $('#chat-m').attr('disabled', true);
+    $('#chat-button').attr('disabled', true);
+    $('#chat-m').attr('placeholder', "You can't talk while you're drawing!");
+    $('#guess-m').attr('disabled', true);
+    $('#guess-m').attr('placeholder', "You can't guess your own drawings!");
+    $('#guess-button').attr('disabled', true);
 
     socket.emit('start game', gameOptions);
     return false;
@@ -135,23 +144,24 @@ $(function () {
     return false;
   });
 
-  $('#main-chat').submit(function(e) {
-    e.preventDefault();
-    var username = $('#name').val();
-    var message = $('#m').val();
-    socket.emit('chat message', username, message);
-    $('#m').val('');
-    return false;
-  });
-
   $('#guess-form').submit(function(e) {
     e.preventDefault();
     if (!gameLogic.youAreDrawing) {
-      var username = $('#name').val();
+      var username = $('#name-modal-input').val();
       var guess = $('#guess-m').val();
       socket.emit('guess message', username, guess, $.now());
     }
     $('#guess-m').val('');
+    return false;
+  });
+
+  $('#message-form').submit(function(e) {
+    e.preventDefault();
+    var username = $('#name-modal-input').val();
+    var message = $('#chat-m').val();
+
+    socket.emit('chat message', username, message, $.now());
+    $('#chat-m').val('');
     return false;
   });
 
@@ -231,10 +241,6 @@ $(function () {
     $('#guess-messages').empty();
   });
 
-  socket.on('chat message', function(message) {
-    $('#messages').append($('<li>').text(message));
-  });
-
   socket.on('guess message', function(username, message, now) {
     var fullMessage = username + ": " + message;
     var listItem;
@@ -260,7 +266,18 @@ $(function () {
     }
 
     $('#guess-messages').append(listItem);
-    $('#guess-box').animate({ scrollTop: $('#guess-messages').prop("scrollHeight") }, 500);
+    $('#guess-box').animate({ scrollTop: $('#guess-messages').prop("scrollHeight") }, 200);
+  });
+
+  socket.on('chat message', function(username, message, now) {
+    var fullMessage = username + ": " + message;
+    var listItem;
+
+    listItem = $('<li>').text(fullMessage);
+    listItem.attr('id', now);
+
+    $('#chat-messages').append(listItem);
+    $('#chat-box').animate({ scrollTop: $('#chat-messages').prop("scrollHeight") }, 200);
   });
 
   socket.on('current word', function(newWord) {
