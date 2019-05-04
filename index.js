@@ -20,6 +20,8 @@ var wordsToDraw;
 var wordList;
 var connectedPlayers = [];
 
+var VERSION = "0.0.4";
+
 // var wordList = baseWordList.concat(leagueChampsList).concat(stateList);
 
 // app.get('/', function(request, response) {
@@ -32,6 +34,8 @@ function findPlayerInLobby(socketId) {
 };
 
 io.on('connection', function(socket) {
+  socket.emit('version', VERSION);
+  socket.emit('user list updated', connectedPlayers);
   socket.emit('word list selections', wordListSelections);
 
   if (gameInProgress) {

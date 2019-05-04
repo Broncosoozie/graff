@@ -15,6 +15,8 @@ $(function () {
   var correctVolume = 0.2;
   var skipVolume = 0.2;
 
+  var currentGameVersion = "0.0.4";
+
   adjustSoundVolumes();
 
   drawing.initialize(socket, gameLogic);
@@ -382,5 +384,11 @@ $(function () {
 
       $('#word-list-option').append(checkBox);
     });
+  });
+
+  socket.on('version', function(version) {
+    if (version !== currentGameVersion) {
+      $('#update-modal').modal();
+    }
   });
 });
