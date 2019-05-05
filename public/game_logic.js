@@ -94,7 +94,7 @@ $(function () {
   };
 
   function markDrawer(socketId) {
-    $('#' + socketId).append('<i class="fas fa-paint-brush"></i>');
+    $('#' + socketId).prepend('<i class="fas fa-paint-brush"></i>');
   };
 
   function getWordListSelections() {
