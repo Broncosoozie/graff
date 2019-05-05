@@ -5,17 +5,8 @@ $(function () {
   var wordList = [];
   var currentWord;
   var gameLogic = {youAreDrawing: false};
-  var tada = new Audio('sounds/tada.flac');
-  var gameOverSound = new Audio('sounds/gameOver.wav');
-  var correctSound = new Audio('sounds/correct.wav');
-  var skipSound = new Audio('sounds/skip.wav');
 
-  var tadaVolume = 0.2;
-  var gameOverVolume = 0.2;
-  var correctVolume = 0.2;
-  var skipVolume = 0.2;
-
-  adjustSoundVolumes();
+  soundHandler.initializeAudio();
 
   drawing.initialize(socket, gameLogic);
 
@@ -41,13 +32,6 @@ $(function () {
     $('#current-username').text(username);
     socket.emit('user changed name', username);
   });
-
-  function adjustSoundVolumes() {
-    tada.volume = tadaVolume;
-    gameOverSound.volume = gameOverVolume;
-    correctSound.volume = correctVolume;
-    skipSound.volume = skipVolume;
-  };
 
   function correctGuess(guess, actual) {
     var actualModified = actual.replace(/[\s\'\.\-]+/, '');
@@ -185,35 +169,9 @@ $(function () {
     return false;
   });
   
-  $('#mute-all-sounds').click(function(e) {
-    e.preventDefault();
-    $('#game-win-sound').val("0");
-    $('#game-over-sound').val("0");
-    $('#correct-sound').val("0");
-    $('#skip-sound').val("0");
-
-    return false;
-  });
-
-  $('#reset-default-sound-options').click(function(e) {
-    e.preventDefault();
-    $('#game-win-sound').val("0.2");
-    $('#game-over-sound').val("0.2");
-    $('#correct-sound').val("0.2");
-    $('#skip-sound').val("0.2");
-
-    return false;
-  });
-
-  $('#save-sound-options').click(function(e) {
-    e.preventDefault();
-
-    tadaVolume = $('#game-win-sound').val();
-    gameOverVolume = $('#game-over-sound').val();
-    correctVolume = $('#correct-sound').val();
-    skipVolume = $('#skip-sound').val();
-    adjustSoundVolumes();
-  });
+  $('#mute-all-sounds').click(soundHandler.muteAllSounds);
+  $('#reset-default-sound-options').click(soundHandler.resetDefaultSoundOptions);
+  $('#save-sound-options').click(soundHandler.saveSoundOptions);
 
   socket.on('your turn', function(wordsToDraw) {
     wordList = wordsToDraw;
@@ -260,14 +218,14 @@ $(function () {
   socket.on('give up', function() {
     resetBoard();
 
-    gameOverSound.play();
+    soundHandler.gameOverSound.play();
     flashMessage('#game-over', 2000);
   });
 
   socket.on('disconnect give up', function() {
     resetBoard();
 
-    gameOverSound.play();
+    soundHandler.gameOverSound.play();
     flashMessage('#disconnect-game-over', 2000);
   });
 
@@ -280,7 +238,7 @@ $(function () {
     var listItem;
 
     if (correctGuess(message, currentWord)) {
-      correctSound.play();
+      soundHandler.correctSound.play();
       listItem = $('<li class="correct">').text(fullMessage);
       listItem.attr('id', now);
       $("#correct-guess").text("Word was: " + currentWord + ", correct!");
@@ -347,7 +305,7 @@ $(function () {
   socket.on('game win', function() {
     resetBoard();
 
-    tada.play();
+    soundHandler.tada.play();
     flashMessage('#game-win', 3000);
   });
 
@@ -365,7 +323,7 @@ $(function () {
   socket.on('time out', function(wordFailedOn) {
     resetBoard();
 
-    gameOverSound.play();
+    soundHandler.gameOverSound.play();
     $("div#time-out").text("Time's up! Word was: " + wordFailedOn);
     flashMessage('#time-out', 3000);
   });
@@ -395,7 +353,7 @@ $(function () {
   });
 
   socket.on('skip word', function() {
-    skipSound.play();
+    soundHandler.skipSound.play();
     flashMessage('#skip-word', 500);
   });
 
