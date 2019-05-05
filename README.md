@@ -10,6 +10,7 @@ Things still left to do (in no particular order):
   * ~~Add nickname/cookie storing~~
   * ~~Add list of who is online~~
   * Add turns
+  * Add rooms
   * Add teams/no team game modes
   * ~~Add word list selection~~
   * Add scoring - 50 pts/word, if all 10 maybe add remaining time
