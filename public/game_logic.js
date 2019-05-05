@@ -27,7 +27,7 @@ $(function () {
     var username = cookieHandler.readCookie('username');
     $('#name-modal-input').val(username);
     $('#current-username').text(username);
-    socket.emit('user changed name', username, true);
+    socket.emit('user reconnected', username);
   };
 
   $('#name-modal').on('hide.bs.modal', function(e) {
@@ -315,18 +315,16 @@ $(function () {
     });
   });
 
-  socket.on('user name change', function(oldUsername, newUsername, suppressMessage) {
-    if (!suppressMessage) {
-      var fullMessage = 'SYSTEM: ' + oldUsername + ' has changed their name to ' + newUsername;
-      var options = {
-        messagesId: '#chat-messages',
-        boxId: '#chat-box',
-        listItemId: $.now,
-        listItemClasses: 'text-white bg-info'
-      }
-
-      addMessage(fullMessage, options);
+  socket.on('user name change', function(oldUsername, newUsername) {
+    var fullMessage = 'SYSTEM: ' + oldUsername + ' has changed their name to ' + newUsername;
+    var options = {
+      messagesId: '#chat-messages',
+      boxId: '#chat-box',
+      listItemId: $.now,
+      listItemClasses: 'text-white bg-info'
     }
+
+    addMessage(fullMessage, options);
   });
 
   socket.on('current word', function(newWord) {

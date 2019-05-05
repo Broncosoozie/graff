@@ -34,19 +34,28 @@ io.on('connection', function(socket) {
 
   console.log('User connected with Socket ID: ' + socket.id);
 
-  socket.on('user changed name', function(username, suppressMessage) {
+  socket.on('user changed name', function(username) {
     var potentialPlayer = findPlayerInLobby(socket.id);
     if (potentialPlayer !== undefined) {
       var oldUsername = potentialPlayer.username;
       potentialPlayer.username = username;
 
-      io.emit('user name change', oldUsername, username, suppressMessage);
+      io.emit('user name change', oldUsername, username);
     } else {
       connectedPlayers.push({
         socketId: socket.id,
         username: username
       });
     }
+
+    io.emit('user list updated', connectedPlayers);
+  });
+
+  socket.on('user reconnected', function(username) {
+    connectedPlayers.push({
+      socketId: socket.id,
+      username: username
+    });
 
     io.emit('user list updated', connectedPlayers);
   });
