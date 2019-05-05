@@ -38,9 +38,11 @@ io.on('connection', function(socket) {
     var potentialPlayer = findPlayerInLobby(socket.id);
     if (potentialPlayer !== undefined) {
       var oldUsername = potentialPlayer.username;
-      potentialPlayer.username = username;
+      if (oldUsername !== username) {
+        potentialPlayer.username = username;
 
-      io.emit('user name change', oldUsername, username);
+        io.emit('user name change', oldUsername, username);
+      }
     } else {
       connectedPlayers.push({
         socketId: socket.id,
