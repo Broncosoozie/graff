@@ -160,6 +160,12 @@ io.on('connection', function(socket) {
 
     io.emit('user list updated', connectedPlayers);
 
+    if (gameInProgress && currentDrawer == socket.id) {
+      gameInProgress = false;
+      clearInterval(gameInterval);
+      io.emit('disconnect give up');
+    }
+
     console.log('User with Socket ID: ' + socket.id + ' disconnected');
   });
 });

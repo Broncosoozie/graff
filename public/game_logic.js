@@ -262,6 +262,13 @@ $(function () {
     flashMessage('#game-over', 2000);
   });
 
+  socket.on('disconnect give up', function() {
+    resetBoard();
+
+    gameOverSound.play();
+    flashMessage('#disconnect-game-over', 2000);
+  });
+
   socket.on('clear guess list', function() {
     $('#guess-messages').empty();
   });

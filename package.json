@@ -1,6 +1,6 @@
 {
   "name": "graff.clariz.io",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Inspired by the Yahoo! Graffiti of old",
   "dependencies": {
     "express": "^4.16.4",

@@ -196,7 +196,7 @@ body {
   display: none;
 }
 
-#game-over, #time-out, #no-wordlist-selected {
+#game-over, #time-out, #no-wordlist-selected, #disconnect-game-over {
   color: #B84442;
   border-color: #EBCCD1;
   background-color: #F2DEDE;
