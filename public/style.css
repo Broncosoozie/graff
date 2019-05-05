@@ -21,7 +21,7 @@ body {
 #guess-box {
   height: 480px;
   width: 100%;
-  border: 3px solid #000;
+  border: 3px solid #343A40;
   border-radius: 4px;
   overflow: auto;
 }
@@ -30,8 +30,6 @@ body {
 #guess-messages li:nth-child(odd) { background: #eee; }
 
 #guess-form { margin-top: 10px; }
-#guess-input { width: 315px; }
-#guess-m { width: 100%; }
 
 #chat-messages { list-style-type: none; margin: 0; padding: 0; }
 #chat-messages li { padding: 5px 10px; }
@@ -90,7 +88,7 @@ body {
 .whiteboard {
   width: 640px;
   height: 480px;
-  border: 3px solid #000;
+  border: 3px solid #343A40;
   border-radius: 4px;
 }
 
@@ -228,7 +226,7 @@ i.fa-eraser {
 
 #user-list-box {
   height: 250px;
-  border: 3px solid #000;
+  border: 3px solid #343A40;
   border-radius: 4px;
   overflow: auto;
 }
@@ -236,13 +234,13 @@ i.fa-eraser {
 #chat-box {
   margin-top: 12px;
   height: 200px;
-  border: 3px solid #000;
+  border: 3px solid #343A40;
   border-radius: 4px;
   overflow: auto;
   width: 100%;
 }
 
-#chat-button {
+#guess-button, #chat-button {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
