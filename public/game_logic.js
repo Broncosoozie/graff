@@ -21,6 +21,8 @@ $(function () {
 
   resetBoard();
 
+  $('[data-toggle="tooltip"]').tooltip();
+
   if (cookieHandler.readCookie('username') === null) {
     $('#name-modal').modal();
   } else {

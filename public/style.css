@@ -109,12 +109,27 @@ body {
 .correct { color: blue; }
 .highlight { color: green; }
 
+.color.eraser {
+  border: 2px solid #DEE2E6;
+  border-radius: 4px;
+}
+
+i.fa-eraser {
+  pointer-events: none;
+  padding-left: 2px;
+}
+
 .highlight-color {
   border: 3px solid #000 !important;
   position: relative;
 }
 
 .highlight-color.white {
+  border: 2px solid #000 !important;
+  position: relative;
+}
+
+.highlight-eraser {
   border: 2px solid #000 !important;
   position: relative;
 }

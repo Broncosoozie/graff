@@ -6,8 +6,8 @@ drawing.initialize = function(socket, gameLogic) {
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var colors = document.getElementsByClassName('color');
   var context = canvas.getContext('2d');
-  var offsetX = parseInt($('.whiteboard')[0].getBoundingClientRect().x);
-  var offsetY = parseInt($('#navBar')[0].getBoundingClientRect().height) + 25;
+  var offsetX = $('.whiteboard').offset().left;
+  var offsetY = $('.whiteboard').offset().top;
 
   var current = {
     color: 'black'
@@ -42,12 +42,19 @@ drawing.initialize = function(socket, gameLogic) {
 
   function drawLine(x0, y0, x1, y1, color, emit){
     context.beginPath();
-    context.moveTo(x0, y0);
-    context.lineTo(x1, y1);
-    context.strokeStyle = color;
-    context.lineWidth = 4;
-    context.stroke();
-    context.closePath();
+    if (color !== "eraser") {
+      context.globalCompositeOperation="source-over";
+      context.moveTo(x0, y0);
+      context.lineTo(x1, y1);
+      context.strokeStyle = color;
+      context.lineWidth = 4;
+      context.stroke();
+      context.closePath();
+    } else {
+      context.globalCompositeOperation="destination-out";
+      context.arc(x0, y0, 10, 0, Math.PI*2, false);
+      context.fill();
+    }
 
     if (!emit) { return; }
     var w = canvas.width;
@@ -89,8 +96,14 @@ drawing.initialize = function(socket, gameLogic) {
 
   function onColorUpdate(e){
     current.color = e.target.className.split(' ')[1];
-    $('.color').removeClass('highlight-color');
-    $('.' + current.color).addClass('highlight-color');
+    if (current.color === "eraser") {
+      $('.color').removeClass('highlight-color');
+      $('.color.eraser').addClass('highlight-eraser');
+    } else {
+      $('.color').removeClass('highlight-color');
+      $('.color.eraser').removeClass('highlight-eraser');
+      $('.' + current.color).addClass('highlight-color');
+    }
   }
 
   // limit the number of events per second
