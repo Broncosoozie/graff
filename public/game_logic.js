@@ -415,9 +415,13 @@ $(function () {
   });
 
   socket.on('version', function(version) {
-    if (version !== cookieHandler.readCookie('VERSION')) {
-      $('#update-modal').modal();
-      cookieHandler.createCookie('VERSION', version, 10);
+    var currentVersion = cookieHandler.readCookie('VERSION');
+    if (currentVersion !== null) {
+      if (version !== cookieHandler.readCookie('VERSION')) {
+        $('#update-modal').modal();
+
+        cookieHandler.createCookie('VERSION', version, 10);
+      }
     }
   });
 });
