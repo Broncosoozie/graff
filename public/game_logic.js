@@ -415,11 +415,11 @@ $(function () {
   socket.on('version', function(version) {
     var currentVersion = cookieHandler.readCookie('VERSION');
     if (currentVersion !== null) {
-      if (version !== cookieHandler.readCookie('VERSION')) {
+      if (version !== currentVersion) {
         $('#update-modal').modal();
-
-        cookieHandler.createCookie('VERSION', version, 10);
       }
     }
+
+    cookieHandler.createCookie('VERSION', version, 10);
   });
 });
