@@ -1,6 +1,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font: 13px Helvetica, Arial;
+  font-size: 14px;
   background-color: #DEE2E6;
 }
 #inputs { padding: 3px; position: fixed; bottom: 20px; width: 100%; }
@@ -65,6 +65,14 @@ body {
 
 #sound-modal-form div input {
   padding: 10px 0px 20px;
+}
+
+.rules-modal-body {
+  font-size: 16px;
+}
+
+.rules-modal-example {
+  margin-bottom: 10px;
 }
 
 #reset-default-sound-options {
@@ -196,7 +204,7 @@ body {
 }
 
 .word-list-label {
-  padding-top: 5px;
+  padding-top: 1px;
 }
 
 #start-game, #give-up {

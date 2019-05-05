@@ -25,6 +25,11 @@
               <button class="btn btn-secondary"><i class="fas fa-cog"></i></button>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#rules-modal">
+              <button class="btn btn-secondary"><i class="fas fa-info-circle"></i></button>
+            </a>
+          </li>
         </ul>
         <ul class="nav mr-sm-2>
           <li class="nav-item">
@@ -217,6 +222,42 @@
               <p>It is recommended to restart your browser to update to the latest code.</p>
 
               <button data-dismiss="modal" class="btn btn-danger">Alright, I will!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="rules-modal" aria-hidden="true" aria-labelledby="rules-modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">How to play</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body rules-modal-body">
+              <div class="row">
+                <div class="col">
+                  <p>
+                    When you hit 'Start Game', you will (by default) get a list of 10 words to draw in 2 minutes. You adjust these parameters in the game options section by clicking on the cog wheel.
+                  </p>
+                  <p>The other people in the room need to try to guess the word. Spelling counts, but capitalization and symbols/spaces do not.</p>
+                  <ul class="list-group rules-modal-example">
+                    <li class="list-group-item">
+                      For example, "michaeljackson" is a correct guess for "Michael Jackson".
+                    </li>
+                    <li class="list-group-item">
+                      Extra characters are ok, too. For example "a bunch of bees" is a correct guess for "bee".
+                    </li>
+                  </ul>
+                  <p>As the person drawing, if a guess is close you can click on their message in the guessing box to highlight it to let the guesser(s) know they are on the right track.</p>
+                  <p>That's it, good luck!</p>
+                </div>
+              </div>
+
+              <button data-dismiss="modal" class="btn btn-primary">Got it!</button>
             </div>
           </div>
         </div>
