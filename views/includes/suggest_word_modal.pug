@@ -1,0 +1,13 @@
+#suggest-word-modal.modal.fade(aria-hidden='true', aria-labelledby='suggest-word-modal')
+  .modal-dialog.modal-dialog-centered(role='document')
+    .modal-content
+      .modal-header
+        h5.modal-title
+          | Suggest a word (or category) to go into the word list
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+      .modal-body
+        form#name-modal-form.form-inline
+          .form-group.mx-sm-2
+            input#suggest-word-modal-input.form-control(autocomplete='off')
+          button#suggest-word-modal-submit.btn.btn-primary Submit

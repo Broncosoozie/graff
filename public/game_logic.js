@@ -161,6 +161,16 @@ $(function () {
     return false;
   });
 
+  $('#suggest-word-modal-submit').click(function(e) {
+    e.preventDefault();
+
+    var wordSuggestion = $('#suggest-word-modal-input').val();
+    socket.emit('word suggestion', wordSuggestion);
+    $('#suggest-word-modal-input').val('');
+
+    return false;
+  });
+
   $('#reset-default-options').click(optionsHandler.resetDefaultOptions);
   $('#save-game-options').click(optionsHandler.saveGameOptions);
   

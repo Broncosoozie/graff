@@ -24,10 +24,11 @@ nav#navBar.navbar.navbar-expand-lg.navbar-dark.bg-dark
         .nav-link
           button#sound-toggle.btn.btn-secondary(data-toggle='modal', data-target='#sound-modal')
             i.fas.fa-bell
-      li.nav-item
-        .dropdown.nav-link
+      li.nav-item.nav-link
+        .dropdown
           button#name-change-nav.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             | Currently playing as: 
             span#current-username Unknown
           .dropdown-menu
             a.dropdown-item(href='#', data-toggle='modal', data-target='#name-modal') Change name
+            a.dropdown-item(href='#', data-toggle='modal', data-target='#suggest-word-modal') Suggest a word

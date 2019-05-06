@@ -1,12 +1,15 @@
-var express = require('express');
+var express = require('express'),
+    fs      = require('fs'),
+    _       = require('lodash');
 var app = express();
 app.set('view engine', 'pug');
 const pug = require('pug');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var _ = require('lodash');
 
 app.use(express.static(__dirname + '/public'));
+
+var wordSuggestionFile = __dirname + '/data/wordSuggestions.txt';
 
 var wholeWordListFile = require(__dirname + '/data/wordlist.json');
 var wordListSelections = _.keys(wholeWordListFile);
@@ -164,6 +167,16 @@ io.on('connection', function(socket) {
 
   socket.on('highlight guess', function(id) {
     socket.broadcast.emit('highlight guess', id);
+  });
+
+  socket.on('word suggestion', function(wordSuggestion) {
+    var modifiedWordSuggestion = '\"' + wordSuggestion + '\",\n';
+    fs.appendFile(wordSuggestionFile, modifiedWordSuggestion, function(_error) {
+      var suggester = _.find(connectedPlayers, function(player) {
+        return player.socketId == socket.id;
+      });
+      console.log(wordSuggestion + ' was suggested by: ' + suggester.username);
+    });
   });
 
   socket.on('disconnect', function() {
