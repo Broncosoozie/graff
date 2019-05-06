@@ -1,10 +1,11 @@
 {
   "name": "graff.clariz.io",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Inspired by the Yahoo! Graffiti of old",
   "dependencies": {
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "pug": "^2.0.3",
     "socket.io": "^2.2.0"
   }
 }
