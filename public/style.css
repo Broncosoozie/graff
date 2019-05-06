@@ -224,6 +224,14 @@ i.fa-eraser {
   width: 130px;
 }
 
+#give-up {
+  display: none;
+}
+
+#post-load {
+  display: none;
+}
+
 #user-list-box {
   height: 250px;
   border: 3px solid #343A40;

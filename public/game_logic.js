@@ -33,6 +33,11 @@ $(function () {
     socket.emit('user changed name', username);
   });
 
+  function finishedLoading() {
+    $('#pre-load').hide();
+    $('#post-load').show();
+  };
+
   function correctGuess(guess, actual) {
     var actualModified = actual.replace(/[\s\'\.\-]+/, '');
     var guessModified = guess.replace(/[\s\'\.\-]+/, '');
@@ -389,4 +394,6 @@ $(function () {
 
     cookieHandler.createCookie('VERSION', version, 10);
   });
+
+  finishedLoading();
 });
