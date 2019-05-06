@@ -1,0 +1,35 @@
+doctype html
+html
+  include includes/head.pug
+
+  body
+    include includes/modals.pug
+
+    #pre-load.text-center
+      .spinner-border.m-5(role='status')
+        span.sr-only Loading...
+
+    #post-load
+      include includes/navbar.pug
+
+      #main-container.container
+        .row
+          .col
+            .row
+              .drawing-area
+                canvas.whiteboard
+                include includes/alert_box.pug
+
+            #drawing-controls.row
+              include includes/drawing_controls.pug
+
+            #game-info.row
+              include includes/game_info.pug
+
+          .col-sm.offset-sm-1.guess-container
+            include includes/guess_container.pug
+
+        .row.chat-container
+          include includes/chat_container.pug
+
+    include includes/index_scripts.pug

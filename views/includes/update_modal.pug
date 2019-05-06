@@ -1,0 +1,13 @@
+#update-modal.modal.fade(aria-hidden='true', aria-labelledby='update-modal')
+  .modal-dialog.modal-dialog-centered(role='document')
+    .modal-content
+      .modal-header
+        h5.modal-title
+          | A new version has been updated on the server!
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+      .modal-body
+        p You may experience issues or bugs until you restart your browser.
+        p It is recommended to restart your browser to update to the latest code.
+        button.btn.btn-danger(data-dismiss='modal')
+          | Alright, I will!

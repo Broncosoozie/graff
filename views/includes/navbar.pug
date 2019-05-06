@@ -1,0 +1,33 @@
+nav#navBar.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container
+    .navbar-header
+      a#logo.navbar-brand(href='#') Graff
+
+    ul.nav.mr-auto
+      li.nav-item
+        a.nav-link(href='#')
+          button#start-game.btn.btn-success Start Game  
+            i.fas.fa-paint-brush
+          button#give-up.btn.btn-danger Give up  
+            i.fas.fa-heart-broken
+      li.nav-item
+        a.nav-link(href='#', data-toggle='modal', data-target='#game-options-modal')
+          button.btn.btn-secondary
+            i.fas.fa-cog
+      li.nav-item
+        a.nav-link(href='#', data-toggle='modal', data-target='#rules-modal')
+          button.btn.btn-secondary
+            i.fas.fa-info-circle
+
+    ul.nav.mr-sm-2
+      li.nav-item
+        .nav-link
+          button#sound-toggle.btn.btn-secondary(data-toggle='modal', data-target='#sound-modal')
+            i.fas.fa-bell
+      li.nav-item
+        .dropdown.nav-link
+          button#name-change-nav.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            | Currently playing as: 
+            span#current-username Unknown
+          .dropdown-menu
+            a.dropdown-item(href='#', data-toggle='modal', data-target='#name-modal') Change name

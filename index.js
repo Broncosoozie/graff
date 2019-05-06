@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+app.set('view engine', 'pug');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var _ = require('lodash');
@@ -22,6 +23,10 @@ var VERSION = require('./package.json').version;
 function findPlayerInLobby(socketId) {
   return _.find(connectedPlayers, ['socketId', socketId]);
 };
+
+app.get('/', function(req, res) {
+  res.render('index', {});
+});
 
 io.on('connection', function(socket) {
   socket.emit('version', VERSION);

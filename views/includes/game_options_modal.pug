@@ -1,0 +1,26 @@
+#game-options-modal.modal.fade(aria-hidden='true', aria-labelledby='game-options-modal')
+  .modal-dialog.modal-dialog-centered(role='document')
+    .modal-content
+      .modal-header
+        h5.modal-title Game Options
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+      .modal-body
+        form#name-modal-form
+          .form-group
+            label(for='time-option') Choose Round Length
+            select#time-option.custom-select(name='time-option')
+              option(value='5') 5 Seconds (For testing only)
+              option(value='60') 60 Seconds
+              option(value='120', selected='') 120 Seconds (Default)
+              option(value='180') 180 Seconds
+              option(value='0') Free play
+          .form-group
+            label(for='word-count-option') Choose Word Count
+            select#word-count-option.custom-select(name='word-count-option')
+              option(value='5') 5 Words
+              option(value='10', selected='') 10 Words (Default)
+              option(value='20') 20 Words
+          #word-list-option.form-group
+          button#reset-default-options.btn.btn-secondary Reset Defaults
+          button.btn.btn-primary(data-dismiss='modal') Save
