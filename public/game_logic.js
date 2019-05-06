@@ -8,8 +8,6 @@ $(function () {
 
   soundHandler.initializeAudio();
 
-  drawing.initialize(socket, gameLogic);
-
   resetBoard();
 
   $('[data-toggle="tooltip"]').tooltip();
@@ -396,4 +394,5 @@ $(function () {
   });
 
   finishedLoading();
+  drawing.initialize(socket, gameLogic);
 });
