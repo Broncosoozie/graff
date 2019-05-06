@@ -1,6 +1,8 @@
 'use strict';
 
-var drawing = {};
+var drawing = {
+  currentlyDrawing: false
+};
 
 drawing.initialize = function(socket, gameLogic) {
   var canvas = document.getElementsByClassName('whiteboard')[0];
@@ -12,7 +14,6 @@ drawing.initialize = function(socket, gameLogic) {
   var current = {
     color: 'black'
   };
-  var drawing = false;
 
   canvas.addEventListener('mousedown', onMouseDown, false);
   canvas.addEventListener('mouseup', onMouseUp, false);
@@ -71,22 +72,22 @@ drawing.initialize = function(socket, gameLogic) {
 
   function onMouseDown(e){
     if (gameLogic.youAreDrawing) {
-      drawing = true;
+      drawing.currentlyDrawing = true;
       current.x = e.clientX - offsetX;
       current.y = e.clientY - offsetY;
     }
   }
 
   function onMouseUp(e){
-    if (!drawing || !gameLogic.youAreDrawing) { return; }
-    drawing = false;
+    if (!drawing.currentlyDrawing || !gameLogic.youAreDrawing) { return; }
+    drawing.currentlyDrawing = false;
     var whereWeAreGoingX = e.clientX - offsetX;
     var whereWeAreGoingY = e.clientY - offsetY;
     drawLine(current.x, current.y, whereWeAreGoingX, whereWeAreGoingY, current.color, true);
   }
 
   function onMouseMove(e){
-    if (!drawing || !gameLogic.youAreDrawing) { return; }
+    if (!drawing.currentlyDrawing || !gameLogic.youAreDrawing) { return; }
     var whereWeAreGoingX = e.clientX - offsetX;
     var whereWeAreGoingY = e.clientY - offsetY;
     drawLine(current.x, current.y, whereWeAreGoingX, whereWeAreGoingY, current.color, true);

@@ -329,6 +329,7 @@ $(function () {
     resetBoard();
 
     soundHandler.gameOverSound.play();
+    drawing.currentlyDrawing = false;
     $("div#time-out").text("Time's up! Word was: " + wordFailedOn);
     flashMessage('#time-out', 3000);
   });
