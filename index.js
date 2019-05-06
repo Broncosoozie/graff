@@ -1,6 +1,8 @@
 var express = require('express'),
     fs      = require('fs'),
-    _       = require('lodash');
+    _       = require('lodash'),
+    favicon = require('serve-favicon')
+    path    = require('path');
 var app = express();
 app.set('view engine', 'pug');
 const pug = require('pug');
@@ -8,6 +10,8 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public'));
+
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 var wordSuggestionFile = __dirname + '/data/wordSuggestions.txt';
 
