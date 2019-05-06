@@ -7,7 +7,7 @@ var optionsHandler = {
     $('#time-option').val(timeOption);
     $('#word-count-option').val(wordCountOption);
 
-    if (wordListString === undefined) {
+    if (wordListString === null) {
       optionsHandler.selectDefaultWordLists();
     } else {
       var wordListArray = wordListString.split(',');
