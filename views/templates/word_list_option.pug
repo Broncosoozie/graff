@@ -1,0 +1,6 @@
+label Choose word lists
+
+each wordList in wordListOptions
+  .custom-control.custom-checkbox
+    input.custom-control-input(type='checkbox', value=wordList.name, id=wordList.listId)
+    label.custom-control-label.word-list-label(for=wordList.listId) #{wordList.name}

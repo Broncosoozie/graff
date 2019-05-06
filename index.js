@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 app.set('view engine', 'pug');
+const pug = require('pug');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var _ = require('lodash');
@@ -9,6 +10,13 @@ app.use(express.static(__dirname + '/public'));
 
 var wholeWordListFile = require(__dirname + '/data/wordlist.json');
 var wordListSelections = _.keys(wholeWordListFile);
+var wordListOptions = _.map(wordListSelections, function(wordListName) {
+  return {name: wordListName, listId: _.kebabCase(wordListName) + '-list'};
+});
+var wordListHTML = pug.renderFile('views/templates/word_list_option.pug', {
+  wordListOptions: wordListOptions
+});
+
 var currentDrawer;
 var gameInProgress = false;
 var gameInterval;
@@ -31,7 +39,7 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
   socket.emit('version', VERSION);
   socket.emit('user list updated', connectedPlayers);
-  socket.emit('word list selections', wordListSelections);
+  socket.emit('word list options', wordListHTML);
 
   if (gameInProgress) {
     socket.emit('game in progress');
