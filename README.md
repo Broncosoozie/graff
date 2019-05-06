@@ -6,7 +6,7 @@ Things still left to do (in no particular order):
   * ~~Add a timer~~
   * ~~Add sounds~~
   * ~~Make sounds mutable~~
-  * Add word suggestion box
+  * ~~Add word suggestion box~~
   * ~~Add nickname/cookie storing~~
   * ~~Add list of who is online~~
   * Add turns
