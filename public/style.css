@@ -15,7 +15,14 @@ body {
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
-.drawing-area { height: 480px; }
+.drawing-area {
+  height: 480px;
+  cursor: url(images/pen.png), auto;
+}
+
+.drawing-area.eraser {
+  cursor: url(images/pen-eraser.png), auto;
+}
 
 #guess-area { width: 100%; }
 #guess-box {

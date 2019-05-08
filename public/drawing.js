@@ -100,10 +100,12 @@ drawing.initialize = function(socket, gameLogic) {
     if (current.color === "eraser") {
       $('.color').removeClass('highlight-color');
       $('.color.eraser').addClass('highlight-eraser');
+      $('.drawing-area').addClass('eraser');
     } else {
       $('.color').removeClass('highlight-color');
       $('.color.eraser').removeClass('highlight-eraser');
       $('.' + current.color).addClass('highlight-color');
+      $('.drawing-area').removeClass('eraser');
     }
   }
 
