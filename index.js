@@ -54,7 +54,7 @@ io.on('connection', function(socket) {
 
   console.log('User connected with Socket ID: ' + socket.id);
 
-  socket.on('user changed name', function(username) {
+  socket.on('user changed name', function(username, usericon) {
     var potentialPlayer = findPlayerInLobby(socket.id);
     if (potentialPlayer !== undefined) {
       var oldUsername = potentialPlayer.username;
@@ -63,20 +63,27 @@ io.on('connection', function(socket) {
 
         io.emit('user name change', oldUsername, username);
       }
+
+      var oldUserIcon = potentialPlayer.usericon;
+      if (oldUserIcon !== usericon) {
+        potentialPlayer.usericon = usericon;
+      }
     } else {
       connectedPlayers.push({
         socketId: socket.id,
-        username: username
+        username: username,
+        usericon: usericon
       });
     }
 
     io.emit('user list updated', connectedPlayers);
   });
 
-  socket.on('user reconnected', function(username) {
+  socket.on('user reconnected', function(username, usericon) {
     connectedPlayers.push({
       socketId: socket.id,
-      username: username
+      username: username,
+      usericon: usericon
     });
 
     io.emit('user list updated', connectedPlayers);

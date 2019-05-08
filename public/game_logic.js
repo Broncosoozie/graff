@@ -16,19 +16,40 @@ $(function () {
     $('#name-modal').modal();
   } else {
     var username = cookieHandler.readCookie('username');
+    var usericon = cookieHandler.readCookie('usericon');
+    $('#' + usericon).toggleClass('emoji-selected');
     $('#name-modal-input').val(username);
     $('#current-username').text(username);
-    socket.emit('user reconnected', username);
+    socket.emit('user reconnected', username, usericon);
   };
+
+  $('#name-modal').on('shown.bs.modal', function() {
+    let selectedEmoji = $('.emoji-selected')[0];
+    let iconContainer = $('.icon-box')[0];
+
+    if (selectedEmoji.getBoundingClientRect().bottom > iconContainer.getBoundingClientRect().bottom) {
+      $('.emoji-selected')[0].scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+      });
+    };
+    if (selectedEmoji.getBoundingClientRect().top < iconContainer.getBoundingClientRect().top) {
+      $('.emoji-selected')[0].scrollIntoView({
+        behavior: "smooth"
+      });
+    };
+  });
 
   $('#name-modal').on('hide.bs.modal', function(e) {
     if ($('#name-modal-input').val() === "") {
       $('#name-modal-input').val("Unknown");
     }
     var username = $('#name-modal-input').val();
+    var usericon = $('.emoji-selected').prop('id');
+    cookieHandler.createCookie('usericon', usericon, 5);
     cookieHandler.createCookie('username', username, 5);
     $('#current-username').text(username);
-    socket.emit('user changed name', username);
+    socket.emit('user changed name', username, usericon);
   });
 
   function finishedLoading() {
@@ -91,6 +112,15 @@ $(function () {
 
     return wordListSelections;
   };
+
+  $('.emoji').click(function(e) {
+    e.preventDefault();
+
+    $('.emoji-selected').toggleClass('emoji-selected');
+    $(this).toggleClass('emoji-selected');
+
+    return false;
+  });
 
   $('#clear').click(function(e) {
     e.preventDefault();
@@ -281,7 +311,10 @@ $(function () {
     $('#user-list').empty();
 
     _.each(userList, function(user) {
-      var listItem = $('<li>').text(user.username + ' ');
+      var emoji = '&#x1F' + user.usericon;
+      var spanItem = $('<span>').html(emoji);
+      spanItem.addClass('user-list-emoji');
+      var listItem = $('<li>').append(spanItem).append(user.username + ' ');
       listItem.attr('id', user.socketId);
       $('#user-list').append(listItem);
     });
