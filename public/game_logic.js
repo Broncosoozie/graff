@@ -1,7 +1,6 @@
 'use strict';
 
 $(function () {
-  var socket = io();
   var wordList = [];
   var currentWord;
   var gameLogic = {youAreDrawing: false};
