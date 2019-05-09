@@ -39,6 +39,12 @@ function findPlayerInLobby(socketId) {
   return _.find(connectedPlayers, ['socketId', socketId]);
 };
 
+function emptySeatHTML(oldSeatId) {
+  return pug.renderFile('views/templates/empty_seat.pug', {
+    seatId: oldSeatId
+  });
+};
+
 app.get('/', function(req, res) {
   res.render('index', {});
 });
@@ -190,10 +196,42 @@ io.on('connection', function(socket) {
     });
   });
 
-  socket.on('disconnect', function() {
-    _.remove(connectedPlayers, function(player) {
-      return player.socketId == socket.id;
+  socket.on('sit down', function(username, usericon, seatId) {
+    var player = _.find(connectedPlayers, ['socketId', socket.id])
+    player.seatId = seatId;
+    var usericon = "&#x1F" + usericon;
+    var seatHTML = pug.renderFile('views/templates/filled_seat.pug', {
+      username: username,
+      usericon: usericon,
+      seatId: seatId,
+      mySeat: false
     });
+
+    socket.broadcast.emit('sit down', username, usericon, seatId, seatHTML);
+
+    var seatHTML = pug.renderFile('views/templates/filled_seat.pug', {
+      username: username,
+      usericon: usericon,
+      seatId: seatId,
+      mySeat: true
+    });
+    socket.emit('sit down', username, usericon, seatId, seatHTML);
+  });
+
+  socket.on('stand up', function(oldSeatId) {
+    var player = _.find(connectedPlayers, ['socketId', socket.id])
+    player.seatId = null;
+
+    io.emit('stand up', oldSeatId, emptySeatHTML(oldSeatId));
+  });
+
+  socket.on('disconnect', function() {
+    var disconnectedPlayers = _.remove(connectedPlayers, ['socketId', socket.id]);
+    var disconnectedPlayer = disconnectedPlayers[0];
+
+    if (! _.isNil(disconnectedPlayer)) {
+      io.emit('stand up', disconnectedPlayer.seatId, emptySeatHTML(disconnectedPlayer.seatId));
+    }
 
     io.emit('user list updated', connectedPlayers);
 

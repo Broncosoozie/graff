@@ -130,6 +130,34 @@ $(function () {
     return false;
   });
 
+  $('.seat-row').on('click', ".empty-seat", function(e) {
+    e.preventDefault();
+
+    if (! _.isNil(currentUser.seatId)) {
+      socket.emit('stand up', currentUser.seatId);
+    }
+
+    currentUser.seatId = e.target.id;
+    var username = cookieHandler.readCookie('username');
+    var usericon = cookieHandler.readCookie('usericon');
+    $(e.target).tooltip('dispose');
+    socket.emit('sit down', username, usericon, currentUser.seatId);
+    return false;
+  });
+
+  $('.seat-row').on('click', ".leave-seat", function(e) {
+    e.preventDefault();
+    var seatId = e.target.parentElement.id;
+    if (currentUser.seatId === seatId) {
+      $(e.target).tooltip('dispose');
+
+      socket.emit('stand up', seatId);
+
+      currentUser.seatId = null;
+    }
+    return false;
+  });
+
   $('#skip').click(function(e) {
     var currentIndex = _.findIndex(wordList, function(word) {
       return word == $('.word').text();
@@ -332,6 +360,18 @@ $(function () {
     }
 
     addMessage(fullMessage, options);
+  });
+
+  socket.on('sit down', (username, usericon, seatId, seatHTML) => {
+    $('#' + seatId).tooltip('dispose');
+    $('#' + seatId).replaceWith(seatHTML);
+    $('#' + seatId).tooltip();
+  });
+
+  socket.on('stand up', (oldSeatId, seatHTML) => {
+    $('#' + oldSeatId).tooltip('dispose');
+    $('#' + oldSeatId).replaceWith(seatHTML);
+    $('#' + oldSeatId).tooltip();
   });
 
   socket.on('current word', function(newWord) {
