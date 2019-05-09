@@ -285,6 +285,10 @@ i.fa-eraser {
   border: 3px solid transparent;
 }
 
+.filled-seat.drawing {
+  border: 3px solid #343A40;
+}
+
 .leave-seat {
   position: absolute;
   left: -3px;

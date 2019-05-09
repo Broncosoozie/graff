@@ -100,11 +100,12 @@ $(function () {
     $('#timer').text("");
     $('#word-count-left').text("");
     $('#user-list li i').remove();
+    $('.drawing').removeClass('drawing');
     socket.emit('clear canvas');
   };
 
-  function markDrawer(socketId) {
-    $('#' + socketId).prepend('<i class="fas fa-paint-brush"></i>');
+  function markDrawer(seatId) {
+    $('#' + seatId).addClass('drawing');
   };
 
   function getWordListSelections() {
@@ -254,7 +255,7 @@ $(function () {
     $('#guess-button').attr('disabled', true);
   });
 
-  socket.on('start new game', function(wordListsEnabled, socketIdWhoStarted) {
+  socket.on('start new game', function(wordListsEnabled, seatIdWhoStarted) {
     flashMessage('#game-start', 1500);
     $('#start-game').hide();
     $('#give-up').show();
@@ -277,7 +278,7 @@ $(function () {
     }
     addMessage(fullMessage, options);
 
-    markDrawer(socketIdWhoStarted);
+    markDrawer(seatIdWhoStarted);
   });
 
   socket.on('give up', function() {

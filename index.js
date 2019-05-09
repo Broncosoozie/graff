@@ -132,7 +132,8 @@ io.on('connection', function(socket) {
     console.log('To: ' + socket.id);
 
     io.emit('clear guess list');
-    io.emit('start new game', options.wordLists, socket.id);
+    var playerWhoStarted = _.find(connectedPlayers, ['socketId', socket.id]);
+    io.emit('start new game', options.wordLists, playerWhoStarted.seatId);
     io.to(`${currentDrawer}`).emit('your turn', wordsToDraw);
     socket.broadcast.emit('current word', wordsToDraw[0]);
     io.emit('current word index', 1, gameOptions.wordCountOption);
