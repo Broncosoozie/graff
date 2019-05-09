@@ -46,6 +46,9 @@ $(function () {
     }
     var username = $('#name-modal-input').val();
     var usericon = $('.emoji-selected').prop('id');
+    if (_.isNil(usericon)) {
+      usericon = $(_.sample($('.emoji'))).addClass('emoji-selected').prop('id');
+    }
     cookieHandler.createCookie('usericon', usericon, 5);
     cookieHandler.createCookie('username', username, 5);
     $('#current-username').text(username);
