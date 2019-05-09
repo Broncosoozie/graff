@@ -271,20 +271,28 @@ i.fa-eraser {
 
 .sit {
   margin-top: 20px;
+  pointer-events: none;
 }
 
 .seat {
   margin-bottom: 30px;
   position: relative;
+  background-color: white;
+  border-radius: 32px;
+  height: 64px;
+  width: 64px;
+  user-select: none;
+  border: 3px solid transparent;
 }
 
 .leave-seat {
   position: absolute;
-  left: 0px;
+  left: -3px;
+  top: -3px;
   font-size: 16px;
   background-color: white;
   border-radius: 8px;
-  display: none;
+  cursor: pointer;
 }
 
 .team-1-header, .team-2-header {
@@ -293,12 +301,24 @@ i.fa-eraser {
 }
 
 .empty-seat {
+  cursor: pointer;
+}
+
+.filled-seat {
+  margin-bottom: 30px;
+  position: relative;
   background-color: white;
   border-radius: 32px;
   height: 64px;
   width: 64px;
-  cursor: pointer;
   user-select: none;
+  border: 3px solid transparent;
+}
+
+.taken {
+  font-family: 'noto-coloremoji';
+  font-size: 30px;
+  padding-top: 4px;
 }
 
 .emoji {

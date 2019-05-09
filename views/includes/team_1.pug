@@ -2,23 +2,6 @@
   .row.team-1-header.justify-content-center
     h5 Team 1
 
-  .row.justify-content-center
-    #seat-1.seat.empty-seat.d-flex.justify-content-center(data-toggle="tooltip" title="Sit")
-      i.fas.fa-times-circle.leave-seat
-      span.sit Sit&nbsp;
-        i.fas.fa-chair
-  .row.justify-content-center
-    #seat-2.seat.empty-seat.d-flex.justify-content-center(data-toggle="tooltip" title="Sit")
-      i.fas.fa-times-circle.leave-seat
-      span.sit Sit&nbsp;
-        i.fas.fa-chair
-  .row.justify-content-center
-    #seat-3.seat.empty-seat.d-flex.justify-content-center(data-toggle="tooltip" title="Sit")
-      i.fas.fa-times-circle.leave-seat
-      span.sit Sit&nbsp;
-        i.fas.fa-chair
-  .row.justify-content-center
-    #seat-4.seat.empty-seat.d-flex.justify-content-center(data-toggle="tooltip" title="Sit")
-      i.fas.fa-times-circle.leave-seat
-      span.sit Sit&nbsp;
-        i.fas.fa-chair
+  each seatId in ["seat-1", "seat-2", "seat-3", "seat-4"]
+    .row.justify-content-center.seat-row
+      include ../templates/empty_seat.pug
