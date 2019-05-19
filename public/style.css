@@ -31,6 +31,10 @@ body {
   cursor: url(images/pen-eraser.png), auto;
 }
 
+#guess-container {
+  margin-left: 25px;
+}
+
 #guess-area { width: 100%; }
 #guess-box {
   height: 480px;
