@@ -201,10 +201,12 @@ io.on('connection', function(socket) {
     var player = _.find(connectedPlayers, ['socketId', socket.id])
     player.seatId = seatId;
     var usericon = "&#x1F" + usericon;
+    var truncatedUsername = _.truncate(username, {'length': 10});
     var seatHTML = pug.renderFile('views/templates/filled_seat.pug', {
       username: username,
       usericon: usericon,
       seatId: seatId,
+      truncatedUsername: truncatedUsername,
       mySeat: false
     });
 
@@ -214,6 +216,7 @@ io.on('connection', function(socket) {
       username: username,
       usericon: usericon,
       seatId: seatId,
+      truncatedUsername: truncatedUsername,
       mySeat: true
     });
     socket.emit('sit down', username, usericon, seatId, seatHTML);
