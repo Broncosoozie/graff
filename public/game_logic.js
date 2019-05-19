@@ -94,7 +94,7 @@ $(function () {
     $('#chat-button').attr("disabled", false);
     $('#give-up').attr("disabled", true);
     $('#give-up').hide();
-    gameLogic.youAreDrawing = false;
+    currentUser.drawing = false;
     currentWord = null;
     $('.word').text("");
     $('#timer').text("");
@@ -135,14 +135,13 @@ $(function () {
     e.preventDefault();
 
     if (! _.isNil(currentUser.seatId)) {
-      socket.emit('stand up', currentUser.seatId);
+      currentUser.standUp(currentUser.seatId);
     }
 
-    currentUser.seatId = e.target.id;
+    $(e.target).tooltip('dispose');
     var username = cookieHandler.readCookie('username');
     var usericon = cookieHandler.readCookie('usericon');
-    $(e.target).tooltip('dispose');
-    socket.emit('sit down', username, usericon, currentUser.seatId);
+    currentUser.sitDown(e.target.id, username, usericon);
     return false;
   });
 
@@ -152,9 +151,7 @@ $(function () {
     if (currentUser.seatId === seatId) {
       $(e.target).tooltip('dispose');
 
-      socket.emit('stand up', seatId);
-
-      currentUser.seatId = null;
+      currentUser.standUp(seatId);
     }
     return false;
   });
@@ -203,7 +200,7 @@ $(function () {
 
   $('#guess-form').submit(function(e) {
     e.preventDefault();
-    if (!gameLogic.youAreDrawing) {
+    if (!currentUser.drawing) {
       var username = $('#name-modal-input').val();
       var guess = $('#guess-m').val();
       socket.emit('guess message', username, guess, $.now());
@@ -243,7 +240,7 @@ $(function () {
     wordList = wordsToDraw;
     currentWord = wordList[0];
     $('.word').text(wordList[0]);
-    gameLogic.youAreDrawing = true;
+    currentUser.drawing = true;
     $('#skip').attr('disabled', false);
     $('#clear').attr('disabled', false);
     $('#give-up').attr('disabled', false);
@@ -260,7 +257,7 @@ $(function () {
     $('#start-game').hide();
     $('#give-up').show();
     $('#start-game').attr("disabled", true);
-    if (!gameLogic.youAreDrawing) {
+    if (!currentUser.drawing) {
       $('#skip').attr("disabled", true);
       $('#clear').attr("disabled", true);
       $('#give-up').attr("disabled", true);
@@ -309,14 +306,14 @@ $(function () {
       listItem.attr('id', now);
       $("#correct-guess").text("Word was: " + currentWord + ", correct!");
       flashMessage('#correct-guess-box', 500);
-      if (gameLogic.youAreDrawing) {
+      if (currentUser.drawing) {
         socket.emit('correct guess', currentWord);
       }
     } else {
       listItem = $('<li>').text(fullMessage);
       listItem.attr('id', now);
       listItem.click(function() {
-        if (gameLogic.youAreDrawing) {
+        if (currentUser.drawing) {
           socket.emit('highlight guess', listItem.attr('id'));
           $('#' + listItem.attr('id')).toggleClass('highlight');
         }
@@ -463,5 +460,5 @@ $(function () {
   });
 
   finishedLoading();
-  drawing.initialize(socket, gameLogic);
+  drawing.initialize(socket, currentUser);
 });

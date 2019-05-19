@@ -4,7 +4,7 @@ var drawing = {
   currentlyDrawing: false
 };
 
-drawing.initialize = function(socket, gameLogic) {
+drawing.initialize = function(socket, currentUser) {
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var colors = document.getElementsByClassName('color');
   var context = canvas.getContext('2d');
@@ -71,7 +71,7 @@ drawing.initialize = function(socket, gameLogic) {
   }
 
   function onMouseDown(e){
-    if (gameLogic.youAreDrawing) {
+    if (currentUser.drawing) {
       drawing.currentlyDrawing = true;
       current.x = e.clientX - offsetX;
       current.y = e.clientY - offsetY;
@@ -79,7 +79,7 @@ drawing.initialize = function(socket, gameLogic) {
   }
 
   function onMouseUp(e){
-    if (!drawing.currentlyDrawing || !gameLogic.youAreDrawing) { return; }
+    if (!drawing.currentlyDrawing || !currentUser.drawing) { return; }
     drawing.currentlyDrawing = false;
     var whereWeAreGoingX = e.clientX - offsetX;
     var whereWeAreGoingY = e.clientY - offsetY;
@@ -87,7 +87,7 @@ drawing.initialize = function(socket, gameLogic) {
   }
 
   function onMouseMove(e){
-    if (!drawing.currentlyDrawing || !gameLogic.youAreDrawing) { return; }
+    if (!drawing.currentlyDrawing || !currentUser.drawing) { return; }
     var whereWeAreGoingX = e.clientX - offsetX;
     var whereWeAreGoingY = e.clientY - offsetY;
     drawLine(current.x, current.y, whereWeAreGoingX, whereWeAreGoingY, current.color, true);
