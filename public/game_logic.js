@@ -116,6 +116,12 @@ $(function () {
     return wordListSelections;
   };
 
+  function fillSeat(seatId, seatHTML) {
+    $('#' + seatId).tooltip('dispose');
+    $('#' + seatId).replaceWith(seatHTML);
+    $('#' + seatId).tooltip();
+  };
+
   $('.emoji').click(function(e) {
     e.preventDefault();
 
@@ -337,6 +343,12 @@ $(function () {
     addMessage(fullMessage, options);
   });
 
+  socket.on('seated player list', function(playerList) {
+    _.each(playerList, function(player) {
+      fillSeat(player.seatId, player.seatHTML);
+    });
+  });
+
   socket.on('user list updated', function(userList) {
     $('#user-list').empty();
 
@@ -363,9 +375,7 @@ $(function () {
   });
 
   socket.on('sit down', (username, usericon, seatId, seatHTML) => {
-    $('#' + seatId).tooltip('dispose');
-    $('#' + seatId).replaceWith(seatHTML);
-    $('#' + seatId).tooltip();
+    fillSeat(seatId, seatHTML);
   });
 
   socket.on('stand up', (oldSeatId, seatHTML) => {

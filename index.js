@@ -51,8 +51,29 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket) {
   socket.emit('version', VERSION);
+  console.log(connectedPlayers);
   socket.emit('user list updated', connectedPlayers);
   socket.emit('word list options', wordListHTML);
+
+  var seatedPlayers = function() {
+    var seatedPlayersHTMLList = _.map(connectedPlayers, function(player) {
+      var usericon = "&#x1F" + player.usericon;
+      var truncatedUsername = _.truncate(player.username, {'length': 10});
+      var seatHTML = pug.renderFile('views/templates/filled_seat.pug', {
+        username: player.username,
+        usericon: usericon,
+        seatId: player.seatId,
+        truncatedUsername: truncatedUsername,
+        mySeat: false
+      });
+
+      return {seatId: player.seatId, seatHTML: seatHTML};
+    });
+
+    return seatedPlayersHTMLList;
+  }
+
+  socket.emit('seated player list', seatedPlayers());
 
   if (gameInProgress) {
     socket.emit('game in progress');
