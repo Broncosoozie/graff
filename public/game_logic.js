@@ -82,7 +82,7 @@ $(function () {
   };
 
   function resetBoard() {
-    $('#start-game').attr("disabled", false);
+    $('#start-game').attr("disabled", !currentUser.seated);
     $('#start-game').show();
     $('#skip').attr("disabled", true);
     $('#clear').attr("disabled", true);
@@ -139,6 +139,7 @@ $(function () {
     }
 
     $(e.target).tooltip('dispose');
+    $('#start-game').attr("disabled", false);
     var username = cookieHandler.readCookie('username');
     var usericon = cookieHandler.readCookie('usericon');
     currentUser.sitDown(e.target.id, username, usericon);
@@ -150,6 +151,7 @@ $(function () {
     var seatId = e.target.parentElement.id;
     if (currentUser.seatId === seatId) {
       $(e.target).tooltip('dispose');
+      $('#start-game').attr("disabled", true);
 
       currentUser.standUp(seatId);
     }
