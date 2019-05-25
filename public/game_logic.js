@@ -374,6 +374,10 @@ $(function () {
     addMessage(fullMessage, options);
   });
 
+  socket.on('user icon change', function(newIcon, seatId) {
+    $('#' + seatId + ' .taken').html('&#x1F' + newIcon);
+  });
+
   socket.on('sit down', (username, usericon, seatId, seatHTML) => {
     fillSeat(seatId, seatHTML);
   });

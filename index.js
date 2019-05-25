@@ -94,6 +94,10 @@ io.on('connection', function(socket) {
       var oldUserIcon = potentialPlayer.usericon;
       if (oldUserIcon !== usericon) {
         potentialPlayer.usericon = usericon;
+
+        if (! _.isNil(potentialPlayer.seatId)) {
+          io.emit('user icon change', usericon, potentialPlayer.seatId);
+        }
       }
     } else {
       connectedPlayers.push({
