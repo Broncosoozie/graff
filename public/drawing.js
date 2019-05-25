@@ -35,10 +35,11 @@ drawing.initialize = function(socket, gameLogic) {
 
   socket.on('drawing', onDrawingEvent);
 
-  socket.on('clear canvas', onResize);
+  socket.on('clear canvas', onLoad);
 
+  window.addEventListener('scroll', onScroll, false);
   window.addEventListener('resize', onResize, false);
-  onResize();
+  onLoad();
 
 
   function drawLine(x0, y0, x1, y1, color, emit){
@@ -128,9 +129,17 @@ drawing.initialize = function(socket, gameLogic) {
     drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
   }
 
-  function onResize() {
-    offsetX = parseInt($('.whiteboard')[0].getBoundingClientRect().x);
+  function onLoad() {
     canvas.width = 640;
     canvas.height = 480;
+  }
+
+  function onResize() {
+    offsetX = $('.whiteboard').offset().left;
+    offsetY = $('.whiteboard').offset().top;
+  }
+
+  function onScroll() {
+    offsetY = $('.whiteboard').offset().top - $(document).scrollTop();
   }
 };
