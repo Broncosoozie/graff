@@ -364,6 +364,8 @@ $(function () {
   });
 
   socket.on('game in progress', function() {
+    $('#guess-m').attr("disabled", false);
+    $('#guess-m').attr("placeholder", "Enter your guess");
     $('#start-game').attr("disabled", true);
   });
 
