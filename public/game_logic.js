@@ -37,8 +37,8 @@ $(function () {
   };
 
   function correctGuess(guess, actual) {
-    var actualModified = actual.replace(/[\s\'\.\-]+/, '');
-    var guessModified = guess.replace(/[\s\'\.\-]+/, '');
+    var actualModified = actual.replace(/[\s\'\.\-]+/gi, '');
+    var guessModified = guess.replace(/[\s\'\.\-]+/gi, '');
     var regex = new RegExp(".*" + actualModified + ".*", "i", "g");
     return guessModified.match(regex) !== null;
   };
