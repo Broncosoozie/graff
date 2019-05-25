@@ -84,6 +84,10 @@ drawing.initialize = function(socket, gameLogic) {
     drawing.currentlyDrawing = false;
     var whereWeAreGoingX = e.clientX - offsetX;
     var whereWeAreGoingY = e.clientY - offsetY;
+    if (whereWeAreGoingX == current.x && whereWeAreGoingY == current.y) {
+      context.arc(current.x, current.y, 2, 0, Math.PI*2, false);
+      context.fill();
+    }
     drawLine(current.x, current.y, whereWeAreGoingX, whereWeAreGoingY, current.color, true);
   }
 
