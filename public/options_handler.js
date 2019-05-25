@@ -28,8 +28,10 @@ var optionsHandler = {
 
   selectDefaultWordLists: function() {
     _.each($('#word-list-option input'), function(checkbox) {
-      $(checkbox).prop('checked', true);
+      $(checkbox).prop('checked', false);
     });
+
+    $('#base-words-list').prop('checked', true);
   },
 
   saveGameOptions: function(e) {
