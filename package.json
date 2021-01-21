@@ -7,6 +7,6 @@
     "lodash": "^4.17.21",
     "pug": "^2.0.3",
     "serve-favicon": "^2.5.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.4.0"
   }
 }
